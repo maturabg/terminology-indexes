@@ -1,14 +1,17 @@
-"""``idx`` command line: build shards, combine, query, write the manifest."""
+"""``idx`` command line: build shards, combine, query, check, fetch a release, write the manifest."""
 
 import argparse
 import json
-import sqlite3
+import os
 import sys
+from dataclasses import asdict
 from pathlib import Path
 
 from terminology_indexes.build import BuildError, combine, fetch_and_build, manifest
-from terminology_indexes.model import load_registry
-from terminology_indexes.search import search
+from terminology_indexes.contract import LinkRecord
+from terminology_indexes.model import IndexVersionError, load_registry
+from terminology_indexes.providers import load_providers
+from terminology_indexes.release import REPO, ReleaseError, download_release
 
 
 def cmd_build(args: argparse.Namespace) -> int:
@@ -32,20 +35,37 @@ def cmd_combine(args: argparse.Namespace) -> int:
     return 0
 
 
+def _registry(index: Path):
+    if not index.exists():
+        raise BuildError(f"{index} not found; run `idx build` or `idx fetch` first")
+    return load_providers(index)
+
+
 def cmd_query(args: argparse.Namespace) -> int:
-    if not args.index.exists():
-        raise BuildError(f"{args.index} not found; run `idx build` first")
-    conn = sqlite3.connect(f"file:{args.index}?mode=ro", uri=True)
-    try:
-        hits = search(conn, args.text, lang=args.lang, limit=args.limit)
-    finally:
-        conn.close()
+    with _registry(args.index) as registry:
+        hits = registry.search_all(
+            args.text, lang=args.lang, sources=args.source, limit=args.limit, per_source=args.per_source
+        )
     if args.json:
-        print(json.dumps([h.__dict__ for h in hits], ensure_ascii=False, indent=2))
+        print(json.dumps([asdict(h) for h in hits], ensure_ascii=False, indent=2))
     else:
         for h in hits:
             print(f"{h.match:5}  {h.source}  {h.title}  {h.url}")
     return 0 if hits else 1
+
+
+def cmd_check(args: argparse.Namespace) -> int:
+    with _registry(args.index) as registry:
+        result = registry.check(LinkRecord(args.source, args.external_id, args.url))
+    print(json.dumps(asdict(result), ensure_ascii=False))
+    return 0 if result.status == "ok" else 1
+
+
+def cmd_fetch(args: argparse.Namespace) -> int:
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    index = download_release(args.dest, tag=args.tag, repo=args.repo, token=token)
+    print(index)
+    return 0
 
 
 def cmd_manifest(args: argparse.Namespace) -> int:
@@ -82,9 +102,24 @@ def parser() -> argparse.ArgumentParser:
     q.add_argument("text")
     q.add_argument("--index", type=Path, default=Path("index.sqlite"))
     q.add_argument("--lang")
-    q.add_argument("--limit", type=int, default=5)
+    q.add_argument("--source", action="append", help="limit to source id (repeatable)")
+    q.add_argument("--limit", type=int, default=10)
+    q.add_argument("--per-source", type=int, default=3)
     q.add_argument("--json", action="store_true")
     q.set_defaults(func=cmd_query)
+
+    k = sub.add_parser("check", help="check one stored link against the index")
+    k.add_argument("source")
+    k.add_argument("external_id")
+    k.add_argument("url")
+    k.add_argument("--index", type=Path, default=Path("index.sqlite"))
+    k.set_defaults(func=cmd_check)
+
+    f = sub.add_parser("fetch", help="download and verify index.sqlite from a release (GH_TOKEN if private)")
+    f.add_argument("--dest", type=Path, default=Path("."))
+    f.add_argument("--tag", help="release tag; default: latest")
+    f.add_argument("--repo", default=REPO)
+    f.set_defaults(func=cmd_fetch)
 
     m = sub.add_parser("manifest", help="print the manifest of a built index")
     m.add_argument("--index", type=Path, default=Path("index.sqlite"))
@@ -97,7 +132,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     try:
         return args.func(args)
-    except BuildError as e:
+    except (BuildError, IndexVersionError, ReleaseError, ValueError) as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
 

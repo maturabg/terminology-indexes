@@ -14,6 +14,18 @@ LABEL_TYPES = frozenset({"pref", "alt", "hidden", "redirect"})
 SNIPPET_LIMITS = {"none": 0, "short": 200, "full": None}
 
 
+class IndexVersionError(RuntimeError):
+    """The index was built with a ``schema_version`` this library does not read."""
+
+
+def check_schema_version(found: str | None, where: object) -> None:
+    if found != str(SCHEMA_VERSION):
+        raise IndexVersionError(
+            f"{where}: schema_version {found!r}, this library reads {SCHEMA_VERSION};"
+            " install the matching lib-v tag or download a matching release"
+        )
+
+
 @dataclass(frozen=True)
 class Label:
     label: str

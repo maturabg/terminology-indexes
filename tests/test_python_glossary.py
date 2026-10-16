@@ -2,19 +2,10 @@ import sqlite3
 from pathlib import Path
 
 import pytest
-from conftest import FIXTURES
 
-from terminology_indexes.build import BuildError, build_shard, combine, manifest
+from terminology_indexes.build import BuildError, combine, manifest
 from terminology_indexes.ingest import get_adapter
-from terminology_indexes.ingest.base import sha256_file
 from terminology_indexes.search import search
-
-INV = FIXTURES / "python_glossary.objects.inv"
-
-
-@pytest.fixture
-def snapshot(python_glossary):
-    return get_adapter(python_glossary).snapshot(INV, sha256_file(INV))
 
 
 def test_parse_only_terms(python_glossary, snapshot) -> None:
@@ -26,15 +17,6 @@ def test_parse_only_terms(python_glossary, snapshot) -> None:
     assert entries["Python 3000"].url.endswith("#term-Python-3000")
     assert entries["decorator"].kind == "term" and entries["decorator"].lang == "en"
     assert snapshot.snapshot_version.startswith("3.14+")
-
-
-@pytest.fixture
-def index(tmp_path: Path, python_glossary, snapshot) -> Path:
-    shard = tmp_path / "shards" / "shard-python_glossary.sqlite"
-    assert build_shard(python_glossary, snapshot, shard) == 9
-    out = tmp_path / "index.sqlite"
-    assert combine([shard], out, "index-test") == {"python_glossary": 9}
-    return out
 
 
 def test_search(index: Path) -> None:

@@ -34,11 +34,19 @@ class Adapter(ABC):
         """Yield entries from a snapshot; must not touch the network."""
 
 
-def download(url: str, dest: Path) -> str:
+def make_request(url: str, headers: dict[str, str] | None = None, token: str | None = None) -> urllib.request.Request:
+    """A request with our User-Agent; ``token`` is not forwarded on redirects (e.g. to S3)."""
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, **(headers or {})})
+    if token:
+        req.add_unredirected_header("Authorization", f"Bearer {token}")
+    return req
+
+
+def download(url: str, dest: Path, headers: dict[str, str] | None = None, token: str | None = None) -> str:
     """Stream ``url`` into ``dest`` and return its SHA-256."""
     dest.parent.mkdir(parents=True, exist_ok=True)
     digest = hashlib.sha256()
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    request = make_request(url, headers, token)
     tmp = dest.with_name(dest.name + ".part")
     with urllib.request.urlopen(request, timeout=TIMEOUT) as response, tmp.open("wb") as out:
         while chunk := response.read(1 << 16):

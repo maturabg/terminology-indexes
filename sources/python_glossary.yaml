@@ -3,7 +3,7 @@ name: "Python Glossary"
 site_no: "25"
 home: "https://docs.python.org/3/glossary.html"
 mode: index
-status: planned
+status: active
 iteration: 1
 fetch:
   method: http_file

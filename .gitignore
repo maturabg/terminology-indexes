@@ -4,3 +4,5 @@ __pycache__/
 *.sqlite.zst
 /raw/
 /shards/
+/manifest.json
+/dist/

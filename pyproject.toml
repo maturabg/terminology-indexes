@@ -4,8 +4,24 @@ version = "0.0.0"
 description = "Search buffer index and source adapters for the en2bg technical dictionary"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = ["pyyaml>=6.0.2"]
+
+[project.scripts]
+idx = "terminology_indexes.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.7"]
 
 [build-system]
 requires = ["uv_build>=0.12.0,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E741"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

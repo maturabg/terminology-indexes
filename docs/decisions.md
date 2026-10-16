@@ -41,3 +41,14 @@
 - Python: pull pinned `3.14/objects.inv`, URL for display `/3/glossary.html#term-…`;
 - PostgreSQL: pull pinned `/docs/18/glossary.html`, URL for display `/docs/current/glossary.html#GLOSSARY-…`.
 - В итерация 10 различни LLM модели предлагат линкове за едни и същи речникови записи. Анализират се разногласията между тях и въз основа на анализа се избира финалният модел.
+
+**Итерация 1**
+
+- зависимости: само `pyyaml`; HTTP през `urllib`, без `requests`. Dev: `pytest`, `ruff`.
+- `objects.inv` се чете със собствен парсер (регулярния израз на Sphinx), без зависимост от Sphinx.
+- `external_id` на Python Glossary е ключът на `std:term` (`decorator`, `Python 3000`), не anchor-ът: anchor-ите са производни и за `>>>` той е `term-0`.
+- `snapshot_version` на източник = `<версия>+<първите 12 знака от sha256 на суровия файл>`, напр. `3.14+a251c26ab04c`.
+- `normalize_term()`: NFKC → тирета (`‐‑‒–—―−` …) в `-`, апострофи в `'`, махане на невидими (soft hyphen, ZWSP, ZWJ) → casefold → един интервал, без интервали около `-`. `term_key()` маха и интервалите, `-` и `_`. Диакритиката остава (`й` ≠ `и`); FTS я маха със `remove_diacritics 2`.
+- търсене: точен `label_key` (pref = `exact`, другите = `alias`), после FTS5 с bm25. Всеки токен на заявката се цитира, последният е префикс — потребителският вход никога не е FTS синтаксис.
+- shard и индексът имат една и съща схема; при combine `id` на записите се преномерират, връзката се пази по `(source, external_id)`. Shard с друг `schema_version` / `norm_version` спира combine.
+- ръчният release е `release.yml`; ако release за деня вече има, workflow-ът пада, освен с `replace=true`.

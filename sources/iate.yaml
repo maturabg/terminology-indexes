@@ -1,0 +1,26 @@
+id: iate
+name: "IATE"
+site_no: "2"
+home: "https://iate.europa.eu/"
+mode: index
+status: planned
+iteration: 6
+fetch:
+  method: http_zip
+  url: "https://iate.europa.eu/download-iate"
+  checksum_url: null
+refresh: "P30D"
+langs: [en, bg]
+kind_default: concept
+stable_id: iate_id
+check: "index_lookup"
+license:
+  class: open
+  url: "https://iate.europa.eu/legal-notice"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "IATE, © Европейски съюз"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "TBX/CSV export, поточен parse, филтър EN+BG. Live API по ID като резервен check. Бележките на отделни записи може да сочат чужд първоизточник — snippet се пропуска при такава бележка. Да се измери размерът на shard-а."

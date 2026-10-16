@@ -1,0 +1,26 @@
+id: histdict
+name: "Старобългарски речник"
+site_no: "21"
+home: "https://histdict.uni-sofia.bg/"
+mode: index
+status: blocked
+iteration: 7
+fetch:
+  method: html_index
+  url: "https://histdict.uni-sofia.bg/"
+  checksum_url: null
+refresh: "P90D"
+langs: [bg]
+kind_default: term
+stable_id: d_id
+check: "index_lookup"
+license:
+  class: unknown
+  url: "https://histdict.uni-sofia.bg/"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Старобългарски речник, СУ „Св. Климент Охридски“"
+rate_limit: { rps: 0.2, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: "писмо до СУ за разрешение / TEI export — не е изпратено"
+notes: "Каталог лема → URL (d_NNNNN) от азбучните индекси — само след положителен отговор."

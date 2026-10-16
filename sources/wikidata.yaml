@@ -1,0 +1,27 @@
+id: wikidata
+name: "Wikidata / Wikipedia"
+site_no: "3"
+home: "https://www.wikidata.org/"
+mode: live
+status: planned
+iteration: 7
+fetch: null
+live:
+  api: "https://www.wikidata.org/w/api.php"
+  auth: none
+  secret: null
+refresh: null
+langs: [en, bg]
+kind_default: concept
+stable_id: qid
+check: "api_by_id"
+license:
+  class: cc_by_sa
+  url: "https://www.wikidata.org/wiki/Wikidata:Licensing"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "Wikidata (CC0) / Wikipedia contributors (CC BY-SA 4.0)"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "wbsearchentities + sitelinks; URL на статия се взема от sitelink. Dumps са над 2 GB — не влизат в индекса. Snippet само от описанието в Wikidata (CC0), не от текст на Wikipedia. Изисква User-Agent с контакт."

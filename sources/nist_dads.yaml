@@ -1,0 +1,26 @@
+id: nist_dads
+name: "NIST Dictionary of Algorithms and Data Structures"
+site_no: "13"
+home: "https://xlinux.nist.gov/dads/"
+mode: index
+status: planned
+iteration: 5
+fetch:
+  method: html_index
+  url: "https://xlinux.nist.gov/dads/"
+  checksum_url: null
+refresh: "P30D"
+langs: [en]
+kind_default: term
+stable_id: page_path
+check: "index_lookup"
+license:
+  class: public_domain
+  url: "https://xlinux.nist.gov/dads/Other/creditNotice.html"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "NIST DADS"
+rate_limit: { rps: 0.2, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Азбучни HTML индекси, бавен crawl. Записи с бележка „CRC Press“ или друг copyright — без snippet."

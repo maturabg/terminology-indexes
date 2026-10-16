@@ -1,0 +1,27 @@
+id: w3c
+name: "W3C (спецификации)"
+site_no: "8"
+home: "https://www.w3.org/TR/"
+mode: live
+status: planned
+iteration: 7
+fetch: null
+live:
+  api: "https://api.w3.org/"
+  auth: none
+  secret: null
+refresh: null
+langs: [en]
+kind_default: document
+stable_id: shortname
+check: "api_by_id"
+license:
+  class: open
+  url: "https://www.w3.org/copyright/document-license-2023/"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "W3C"
+rate_limit: { rps: 10, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Само линк към цяла спецификация; термините на W3C идват от webref. Лимит на API: 6000 заявки / 10 мин."

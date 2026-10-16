@@ -1,0 +1,26 @@
+id: owasp_cheatsheets
+name: "OWASP Cheat Sheet Series"
+site_no: "17a"
+home: "https://cheatsheetseries.owasp.org/"
+mode: index
+status: planned
+iteration: 5
+fetch:
+  method: git_sparse
+  url: "https://github.com/OWASP/CheatSheetSeries"
+  checksum_url: null
+refresh: "P7D"
+langs: [en]
+kind_default: document
+stable_id: page_anchor
+check: "index_lookup"
+license:
+  class: cc_by_sa
+  url: "https://cheatsheetseries.owasp.org/"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "OWASP, CC BY-SA 4.0"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Директория cheatsheets/; заглавия и секции с anchors."

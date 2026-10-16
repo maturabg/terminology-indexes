@@ -1,0 +1,30 @@
+id: eom
+name: "Encyclopedia of Mathematics"
+site_no: "15"
+home: "https://encyclopediaofmath.org/"
+mode: index
+status: planned
+iteration: 6
+fetch:
+  method: mediawiki_titles
+  url: "https://encyclopediaofmath.org/api.php"
+  checksum_url: null
+live:
+  api: "https://encyclopediaofmath.org/api.php"
+  auth: none
+  secret: null
+refresh: "P30D"
+langs: [en]
+kind_default: term
+stable_id: pageid
+check: "api_by_id"
+license:
+  class: restricted
+  url: "https://encyclopediaofmath.org/wiki/Encyclopedia_of_Mathematics:Copyrights"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Encyclopedia of Mathematics (Springer / EMS)"
+rate_limit: { rps: 0.5, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Само заглавия през list=allpages. Смесени права (оригиналите © Springer) — без snippet. На 2026-10-16 api.php връщаше 502 — да се провери отново."

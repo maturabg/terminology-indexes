@@ -1,0 +1,27 @@
+id: lexit
+name: "ЛЕКСИТ (ИБЕ при БАН)"
+site_no: "1"
+home: "https://ibl.bas.bg/dictionary_portal/"
+mode: live
+status: planned
+iteration: 7
+fetch: null
+live:
+  api: "https://ibl.bas.bg/dictionary_portal/"
+  auth: none
+  secret: null
+refresh: null
+langs: [bg]
+kind_default: term
+stable_id: search_url
+check: "http_anchor"
+license:
+  class: restricted
+  url: "https://ibl.bas.bg/dictionary_portal/"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Институт за български език „Проф. Любомир Андрейчин“ – БАН"
+rate_limit: { rps: 0.2, daily: 500 }
+guards: { max_row_drop: 0.2 }
+contact: "ИБЕ — писмо за разрешение (итерация 9)"
+notes: "Няма API и export; линкът е към резултатите от търсене. check = непразен резултат. Всички права запазени — само линк, без текст."

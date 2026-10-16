@@ -1,0 +1,26 @@
+id: cncf_glossary
+name: "CNCF Cloud Native Glossary"
+site_no: "19"
+home: "https://glossary.cncf.io/"
+mode: index
+status: planned
+iteration: 5
+fetch:
+  method: git_sparse
+  url: "https://github.com/cncf/glossary"
+  checksum_url: null
+refresh: "P7D"
+langs: [en, bg]
+kind_default: term
+stable_id: slug
+check: "index_lookup"
+license:
+  class: cc_by
+  url: "https://github.com/cncf/glossary#license"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "CNCF Glossary contributors, CC BY 4.0"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Git (content/<lang>) за кандидати, https://glossary.cncf.io/sitemap.xml като whitelist на публикуваните URL. Да се провери дали има bg превод."

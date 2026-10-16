@@ -1,0 +1,30 @@
+id: wiktionary
+name: "Wiktionary EN/BG"
+site_no: "5"
+home: "https://en.wiktionary.org/"
+mode: index
+status: planned
+iteration: 6
+fetch:
+  method: mediawiki_titles
+  url: "https://dumps.wikimedia.org/{wiki}/latest/{wiki}-latest-all-titles-in-ns0.gz"
+  checksum_url: null
+live:
+  api: "https://{lang}.wiktionary.org/w/api.php"
+  auth: none
+  secret: null
+refresh: "P14D"
+langs: [en, bg]
+kind_default: term
+stable_id: title
+check: "api_by_id"
+license:
+  class: cc_by_sa
+  url: "https://en.wiktionary.org/wiki/Wiktionary:Copyrights"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Wiktionary contributors, CC BY-SA 4.0"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Индекс + live: индексът държи само заглавията (enwiktionary и bgwiktionary); check по pageid проверява live, че има езикова секция English/Български."

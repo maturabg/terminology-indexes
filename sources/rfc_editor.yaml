@@ -1,0 +1,26 @@
+id: rfc_editor
+name: "RFC Editor"
+site_no: "7"
+home: "https://www.rfc-editor.org/"
+mode: index
+status: planned
+iteration: 5
+fetch:
+  method: http_file
+  url: "https://www.rfc-editor.org/rfc-index.xml"
+  checksum_url: null
+refresh: "P1D"
+langs: [en]
+kind_default: document
+stable_id: rfc_number
+check: "index_lookup"
+license:
+  class: open
+  url: "https://trustee.ietf.org/documents/trust-legal-provisions/tlp-5/"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "IETF Trust / RFC Editor"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Линк към цял документ (/info/rfcNNNN/), не към термин. Snippet = непроменен откъс от abstract с посочване на RFC (TLP §3.c). Obsoleted-by → status deprecated + replaced_by."

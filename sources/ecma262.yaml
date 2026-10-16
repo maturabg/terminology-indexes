@@ -1,0 +1,26 @@
+id: ecma262
+name: "ECMAScript / ECMA-262"
+site_no: "27"
+home: "https://tc39.es/ecma262/"
+mode: index
+status: planned
+iteration: 4
+fetch:
+  method: npm
+  url: "@tc39/ecma262-biblio"
+  checksum_url: null
+refresh: "P7D"
+langs: [en]
+kind_default: spec_section
+stable_id: biblio_id
+check: "index_lookup"
+license:
+  class: open
+  url: "https://github.com/tc39/ecma262/blob/main/LICENSE.md"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Ecma International"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Пинната npm версия. Biblio няма текст на дефинициите — snippet: none; release-ът носи пълния copyright notice."

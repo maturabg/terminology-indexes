@@ -1,0 +1,27 @@
+id: eurlex
+name: "EUR-Lex / Cellar"
+site_no: "23"
+home: "https://eur-lex.europa.eu/"
+mode: live
+status: planned
+iteration: 7
+fetch: null
+live:
+  api: "https://publications.europa.eu/webapi/rdf/sparql"
+  auth: none
+  secret: null
+refresh: null
+langs: [en, bg]
+kind_default: document
+stable_id: celex
+check: "api_by_id"
+license:
+  class: cc_by
+  url: "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html?locale=en"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "EUR-Lex, © Европейски съюз"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Първо Cellar SPARQL (без ключ). SOAP Search Webservice иска регистрация — secret EURLEX_SOAP_USER/EURLEX_SOAP_PASS по-късно. check през Cellar REST."

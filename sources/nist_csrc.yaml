@@ -1,0 +1,26 @@
+id: nist_csrc
+name: "NIST CSRC Glossary"
+site_no: "12"
+home: "https://csrc.nist.gov/glossary"
+mode: index
+status: planned
+iteration: 3
+fetch:
+  method: http_zip
+  url: "https://csrc.nist.gov/csrc/media/glossary/glossary-export.zip"
+  checksum_url: null
+refresh: "P1D"
+langs: [en]
+kind_default: term
+stable_id: permalink
+check: "index_lookup"
+license:
+  class: public_domain
+  url: "https://www.nist.gov/copyrights-disclaimers"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "NIST CSRC"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Дневен JSON ZIP. Checksum URL — да се намери в итерация 3 (засега ETag). Дефинициите цитират различни издания: snippet само ако източникът на дефиницията е NIST публикация."

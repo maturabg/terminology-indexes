@@ -1,0 +1,26 @@
+id: mitre_cwe
+name: "MITRE CWE"
+site_no: "18"
+home: "https://cwe.mitre.org/"
+mode: index
+status: planned
+iteration: 4
+fetch:
+  method: http_zip
+  url: "https://cwe.mitre.org/data/xml/cwec_latest.xml.zip"
+  checksum_url: null
+refresh: "P7D"
+langs: [en]
+kind_default: concept
+stable_id: cwe_id
+check: "index_lookup"
+license:
+  class: open
+  url: "https://cwe.mitre.org/about/termsofuse.html"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "CWE™ © The MITRE Corporation"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Release-ът трябва да носи copyright и Terms of Use на MITRE. Deprecated → status deprecated + replaced_by."

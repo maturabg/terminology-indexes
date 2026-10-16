@@ -1,0 +1,26 @@
+id: mdn
+name: "MDN Glossary"
+site_no: "10"
+home: "https://developer.mozilla.org/en-US/docs/Glossary"
+mode: index
+status: planned
+iteration: 5
+fetch:
+  method: git_sparse
+  url: "https://github.com/mdn/content"
+  checksum_url: null
+refresh: "P7D"
+langs: [en]
+kind_default: term
+stable_id: slug
+check: "index_lookup"
+license:
+  class: cc_by_sa
+  url: "https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Attrib_copyright_license"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "Mozilla Contributors, CC BY-SA 2.5+"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Sparse checkout на files/en-us/glossary; URL се строи от slug във frontmatter. Snippet от първия абзац, без кодови примери."

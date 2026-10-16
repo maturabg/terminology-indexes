@@ -1,0 +1,23 @@
+id: iso_obp
+name: "ISO Online Browsing Platform"
+site_no: "6"
+home: "https://www.iso.org/obp/ui"
+mode: gated
+status: blocked
+iteration: 9
+fetch: null
+refresh: null
+langs: [en]
+kind_default: term
+stable_id: obp_urn
+check: null
+license:
+  class: restricted
+  url: "https://www.iso.org/es/home/store/iso-obp-terms.html"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "ISO"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: "писмо за лицензиран export — не е изпратено"
+notes: "OBP View-Only забранява систематично извличане и индексиране. Без лицензиран export няма нищо."

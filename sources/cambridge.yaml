@@ -1,0 +1,27 @@
+id: cambridge
+name: "Cambridge Dictionary"
+site_no: "4"
+home: "https://dictionary.cambridge.org/"
+mode: gated
+status: blocked
+iteration: 9
+fetch: null
+live:
+  api: "https://dictionary-api.cambridge.org/api/"
+  auth: key
+  secret: "CAMBRIDGE_API_KEY"
+refresh: null
+langs: [en]
+kind_default: term
+stable_id: entry_id
+check: "api_by_id"
+license:
+  class: restricted
+  url: "https://dictionary.cambridge.org/license"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Cambridge University Press & Assessment"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: "писмо за лиценз и цена — не е изпратено"
+notes: "API с ключ и проприетарен лиценз; условията не позволяват постоянно съхранение. Само с писмено разрешение."

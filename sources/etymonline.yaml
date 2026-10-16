@@ -1,0 +1,26 @@
+id: etymonline
+name: "Online Etymology Dictionary"
+site_no: "20"
+home: "https://www.etymonline.com/"
+mode: index
+status: planned
+iteration: 7
+fetch:
+  method: sitemap
+  url: "https://www.etymonline.com/sitemap.xml"
+  checksum_url: null
+refresh: "P30D"
+langs: [en]
+kind_default: term
+stable_id: lemma_path
+check: "index_lookup"
+license:
+  class: restricted
+  url: "https://www.etymonline.com/legal/terms"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Etymonline"
+rate_limit: { rps: 0.2, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Само каталог лема → URL (/word/{lemma}) от sitemap, без съдържание. Вътрешните /api/ маршрути не се ползват."

@@ -1,0 +1,26 @@
+id: eurovoc
+name: "EuroVoc"
+site_no: "22"
+home: "https://op.europa.eu/en/web/eu-vocabularies"
+mode: index
+status: planned
+iteration: 6
+fetch:
+  method: http_zip
+  url: "https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurovoc"
+  checksum_url: null
+refresh: "P30D"
+langs: [en, bg]
+kind_default: concept
+stable_id: concept_uri
+check: "sparql_ask"
+license:
+  class: cc_by
+  url: "https://op.europa.eu/en/web/about-us/legal-notices/publications-office-of-the-european-union-copyright"
+  checked_at: 2026-10-14
+snippet_policy: short
+attribution: "EuroVoc, © Европейски съюз"
+rate_limit: { rps: 1, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "SKOS download, pref/alt етикети на EN и BG. Лицензът да се провери за конкретния release при първия fetch. check: SPARQL ASK към https://publications.europa.eu/webapi/rdf/sparql."

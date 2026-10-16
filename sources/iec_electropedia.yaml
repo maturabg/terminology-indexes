@@ -1,0 +1,23 @@
+id: iec_electropedia
+name: "IEC Electropedia"
+site_no: "16"
+home: "https://www.electropedia.org/"
+mode: gated
+status: blocked
+iteration: 9
+fetch: null
+refresh: null
+langs: [en]
+kind_default: concept
+stable_id: iev_ref
+check: null
+license:
+  class: restricted
+  url: "https://webstore.iec.ch/copyright"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "IEC"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: "писмо до IEC — не е изпратено"
+notes: "XML Open Data API по тематични части — само след писмено потвърждение."

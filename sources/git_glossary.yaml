@@ -1,0 +1,26 @@
+id: git_glossary
+name: "Git Glossary"
+site_no: "24"
+home: "https://git-scm.com/docs/gitglossary"
+mode: index
+status: planned
+iteration: 4
+fetch:
+  method: http_file
+  url: "https://raw.githubusercontent.com/git/git/master/Documentation/glossary-content.adoc"
+  checksum_url: null
+refresh: "P30D"
+langs: [en]
+kind_default: term
+stable_id: anchor
+check: "index_lookup"
+license:
+  class: copyleft
+  url: "https://github.com/git/git/blob/master/COPYING"
+  checked_at: 2026-10-14
+snippet_policy: none
+attribution: "Git project, GPL-2.0-only"
+rate_limit: { rps: null, daily: null }
+guards: { max_row_drop: 0.2 }
+contact: null
+notes: "Anchors def_…. GPL текст в release asset изисква отделен GPL-съвместим файл — засега без snippet."

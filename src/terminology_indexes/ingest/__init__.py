@@ -6,6 +6,7 @@ from terminology_indexes.ingest.base import Adapter
 from terminology_indexes.model import Source
 
 ADAPTERS = {
+    "nist_csrc": "terminology_indexes.ingest.nist_csrc:NistCsrc",
     "python_glossary": "terminology_indexes.ingest.python_glossary:PythonGlossary",
 }
 

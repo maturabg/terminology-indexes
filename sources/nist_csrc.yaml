@@ -3,7 +3,7 @@ name: "NIST CSRC Glossary"
 site_no: "12"
 home: "https://csrc.nist.gov/glossary"
 mode: index
-status: planned
+status: active
 iteration: 3
 fetch:
   method: http_zip
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "NIST CSRC"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "encryption", expect: "encryption" }
+  - { query: "Advanced Encryption Standard", expect: "aes" }
 contact: null
-notes: "Дневен JSON ZIP. Checksum URL — да се намери в итерация 3 (засега ETag). Дефинициите цитират различни издания: snippet само ако източникът на дефиницията е NIST публикация."
+notes: "Дневен JSON ZIP (~9 000 термина). Checksum URL няма: „непроменен“ = SHA-256 на JSON-а в ZIP-а (самият ZIP се преиздава всеки ден). abbrSyn влизат като alt етикети. Дефинициите цитират различни издания: snippet само ако източникът на дефиницията е NIST публикация."

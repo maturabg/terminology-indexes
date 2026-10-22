@@ -42,3 +42,14 @@
 - PostgreSQL: pull pinned `/docs/18/glossary.html`, URL for display `/docs/current/glossary.html#GLOSSARY-…`.
 - В итерация 10 различни LLM модели предлагат линкове за едни и същи речникови записи. Анализират се разногласията между тях и въз основа на анализа се избира финалният модел.
 
+
+**Нощен refresh**
+
+- `refresh.yml` замества ръчния `release.yml`. Логиката е в Python (`refresh.py`, командите `idx plan|shard|assemble`), YAML-ът само вика CLI и `gh`.
+- Паднал източник не чупи run-а: `idx shard` записва `status: failed` и излиза с 0. Видимостта е issue `source:<id>` и job summary, не червен job.
+- „Непроменен“ = същият SHA-256 на суровите данни като в manifest-а. За NIST CSRC се хешира JSON-ът, не ZIP-ът — ZIP-ът се преиздава всеки ден.
+- Дължимост: `checked_at` (последно успешно теглене, променено или не) + `refresh` минус толеранс `min(12 h, refresh / 2)` за разминаването на cron-а. Паднал източник не мести `checked_at`, така че е дължим пак на следващия ден.
+- Нов release само ако поне един shard е построен наново и приет (или `force`); иначе `release_tag` в manifest-а остава стария. Така `snapshot_version` на линковете не се сменя без нужда.
+- Guards по shard преди сливането: `max_row_drop` спрямо предишния shard и `golden` заявките от yaml-а. Отхвърлен shard се заменя с предишния. След сливането `golden` се пускат отново върху целия индекс; провал там спира release-а.
+- Release-ът съдържа точно shards, влезли в индекса, а `manifest.json` в него е същият като `manifest/sources.json`.
+- Втори run в един ден: `index-YYYYMMDD.2`, `.3`, … — съществуващ tag не се презаписва, защото някой може вече да го е пиннал.

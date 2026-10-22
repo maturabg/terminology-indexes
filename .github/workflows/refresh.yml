@@ -1,0 +1,196 @@
+name: refresh
+
+# Nightly: plan -> fetch (matrix) -> combine (guards, publish, manifest commit, issues).
+# 20:47 UTC is at least two hours before the 02:00 Sofia enrichment (23:00 / 00:00 UTC).
+on:
+  schedule:
+    - cron: "47 20 * * *"
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: "Source ids, space separated; empty = the ones due"
+        default: ""
+      force:
+        description: "Rebuild unchanged sources and publish even if nothing changed"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: index-refresh
+  cancel-in-progress: false
+
+env:
+  FORCE: ${{ inputs.force && '--force' || '' }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write # keepalive
+    outputs:
+      sources: ${{ steps.plan.outputs.sources }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCES: ${{ inputs.sources }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+
+      - id: plan
+        run: |
+          args=()
+          for s in $SOURCES; do args+=(--source "$s"); done
+          due=$(uv run idx plan "${args[@]}" $FORCE)
+          echo "due: $due"
+          echo "sources=$due" >> "$GITHUB_OUTPUT"
+
+      # Public repo: cron workflows are disabled after 60 days without activity.
+      - name: Keepalive
+        run: gh api -X PUT "repos/$GITHUB_REPOSITORY/actions/workflows/refresh.yml/enable"
+
+  fetch:
+    needs: plan
+    if: needs.plan.outputs.sources != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        source: ${{ fromJSON(needs.plan.outputs.sources) }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+
+      # A broken source writes status "failed" and exits 0; combine reports it.
+      - run: uv run idx shard "${{ matrix.source }}" $FORCE
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shard-${{ matrix.source }}
+          path: shards/
+          retention-days: 3
+
+  combine:
+    needs: [plan, fetch]
+    if: always() && needs.plan.result == 'success' && needs.plan.outputs.sources != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # release + manifest commit
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      DUE: ${{ needs.plan.outputs.sources }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-*
+          path: new
+          merge-multiple: true
+
+      # Shards of the release the committed manifest describes (latest on the first run).
+      - name: Previous release
+        run: |
+          mkdir -p previous
+          tag=$(jq -r '.release_tag // empty' manifest/sources.json 2>/dev/null || true)
+          if gh release download $tag --pattern 'shard-*.sqlite.zst' --dir previous; then
+            zstd -dq --rm previous/*.zst
+          else
+            echo "::warning::no previous release ${tag:-latest}; only new shards go in"
+          fi
+          ls -la previous new
+
+      - name: Tag
+        run: |
+          base="index-$(date -u +%Y%m%d)"
+          tag="$base"
+          n=1
+          while gh release view "$tag" > /dev/null 2>&1; do
+            n=$((n + 1))
+            tag="$base.$n"
+          done
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+
+      - name: Assemble
+        id: assemble
+        run: |
+          uv run idx assemble --due "$DUE" --new-dir new --previous-dir previous \
+            --release-tag "$TAG" --report report.json --summary summary.md $FORCE
+          echo "changed=$(jq -r .changed report.json)" >> "$GITHUB_OUTPUT"
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish
+        if: steps.assemble.outputs.changed == 'true'
+        run: |
+          mkdir dist
+          zstd -19 -T0 -q index.sqlite -o dist/index.sqlite.zst
+          for f in $(jq -r '.sources[].shard // empty' report.json); do
+            zstd -19 -T0 -q "$f" -o "dist/$(basename "$f").zst"
+          done
+          cp manifest/sources.json dist/manifest.json
+          size=$(stat -c %s dist/index.sqlite.zst)
+          if [ "$size" -gt 1610612736 ]; then
+            echo "::warning::index.sqlite.zst is $size bytes; the release asset limit is 2 GiB"
+          fi
+          ls -la dist
+          gh release create "$TAG" dist/* --title "$TAG" --notes-file summary.md --latest
+
+      - name: Prune old releases
+        if: steps.assemble.outputs.changed == 'true'
+        run: |
+          gh release list --limit 200 --json tagName,createdAt \
+            --jq '[.[] | select(.tagName | startswith("index-"))] | sort_by(.createdAt) | reverse | .[14:][].tagName' |
+          while read -r old; do
+            gh release delete "$old" --cleanup-tag --yes
+          done
+
+      # Also the keepalive: checked_at moves on every run.
+      - name: Commit manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add manifest/sources.json
+          if git diff --cached --quiet; then
+            echo "manifest unchanged"
+            exit 0
+          fi
+          if [ "${{ steps.assemble.outputs.changed }}" = "true" ]; then msg="manifest: $TAG"; else msg="manifest: checked $(date -u +%F)"; fi
+          git commit -q -m "$msg"
+          git pull -q --rebase origin "$GITHUB_REF_NAME"
+          git push -q origin "HEAD:$GITHUB_REF_NAME"
+
+      # One open issue per broken source (label source:<id>); closed when the source recovers.
+      - name: Issues
+        if: always() && hashFiles('report.json') != ''
+        run: |
+          jq -r '.sources | to_entries[] | [.key, .value.outcome, .value.message] | @tsv' report.json |
+          while IFS=$'\t' read -r id outcome message; do
+            label="source:$id"
+            open=$(gh issue list --label "$label" --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+            case "$outcome" in
+              failed|rejected)
+                gh label create "$label" --color d73a4a --description "refresh problems of $id" --force > /dev/null
+                body="$RUN_URL: **$outcome** — $message"
+                if [ -n "$open" ]; then
+                  gh issue comment "$open" --body "$body"
+                else
+                  gh issue create --title "$id: $outcome" --label "$label" --body "$body"
+                fi
+                ;;
+              built|unchanged)
+                if [ -n "$open" ]; then
+                  gh issue close "$open" --comment "Recovered in $RUN_URL ($outcome)."
+                fi
+                ;;
+            esac
+          done

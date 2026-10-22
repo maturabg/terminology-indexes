@@ -1,16 +1,21 @@
-"""``idx`` command line: build shards, combine, query, check, fetch a release, write the manifest."""
+"""``idx`` command line: build shards, combine, query, check, fetch a release, write the manifest.
+
+``plan`` / ``shard`` / ``assemble`` are the steps of ``refresh.yml``.
+"""
 
 import argparse
 import json
 import os
 import sys
 from dataclasses import asdict
+from datetime import UTC, datetime
 from pathlib import Path
 
 from terminology_indexes.build import BuildError, combine, fetch_and_build, manifest
 from terminology_indexes.contract import LinkRecord
 from terminology_indexes.model import IndexVersionError, load_registry
 from terminology_indexes.providers import load_providers
+from terminology_indexes.refresh import FAILED, assemble, plan, read_json, refresh_source, summary, write_json
 from terminology_indexes.release import REPO, ReleaseError, download_release
 
 
@@ -77,6 +82,52 @@ def cmd_manifest(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_plan(args: argparse.Namespace) -> int:
+    due = plan(
+        load_registry(args.sources_dir),
+        read_json(args.manifest),
+        at=datetime.now(UTC),
+        only=args.source,
+        force=args.force,
+    )
+    print(json.dumps(due))
+    return 0
+
+
+def cmd_shard(args: argparse.Namespace) -> int:
+    registry = load_registry(args.sources_dir)
+    if args.source not in registry:
+        raise BuildError(f"unknown source {args.source!r}")
+    status = refresh_source(
+        registry[args.source], args.raw_dir, args.shards_dir, read_json(args.manifest), force=args.force
+    )
+    if status["outcome"] == FAILED:
+        # A broken source is reported by assemble, not by failing the matrix job.
+        print(f"::warning title={args.source}::{status['message']}")
+    print(json.dumps(status, ensure_ascii=False))
+    return 0
+
+
+def cmd_assemble(args: argparse.Namespace) -> int:
+    result = assemble(
+        load_registry(args.sources_dir),
+        due=json.loads(args.due),
+        new_dir=args.new_dir,
+        previous_dir=args.previous_dir,
+        previous=read_json(args.manifest),
+        out=args.out,
+        release_tag=args.release_tag,
+        force=args.force,
+    )
+    write_json(args.manifest, result["manifest"])
+    if args.report:
+        write_json(args.report, {"changed": result["changed"], "sources": result["sources"]})
+    if args.summary:
+        args.summary.write_text(summary(result), encoding="utf-8")
+    print(f"changed: {str(result['changed']).lower()}", file=sys.stderr)
+    return 0
+
+
 def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="idx", description=__doc__)
     sub = p.add_subparsers(required=True)
@@ -125,6 +176,34 @@ def parser() -> argparse.ArgumentParser:
     m.add_argument("--index", type=Path, default=Path("index.sqlite"))
     m.add_argument("-o", "--output", type=Path)
     m.set_defaults(func=cmd_manifest)
+
+    def refresh_args(sp: argparse.ArgumentParser) -> None:
+        sp.add_argument("--sources-dir", type=Path, default=Path("sources"))
+        sp.add_argument("--manifest", type=Path, default=Path("manifest/sources.json"))
+        sp.add_argument("--force", action="store_true")
+
+    pl = sub.add_parser("plan", help="print the JSON list of sources due for refresh")
+    pl.add_argument("--source", action="append", help="only these sources, due regardless of schedule")
+    refresh_args(pl)
+    pl.set_defaults(func=cmd_plan)
+
+    sh = sub.add_parser("shard", help="fetch one source into shards-dir; write status-<id>.json")
+    sh.add_argument("source")
+    sh.add_argument("--raw-dir", type=Path, default=Path("raw"))
+    sh.add_argument("--shards-dir", type=Path, default=Path("shards"))
+    refresh_args(sh)
+    sh.set_defaults(func=cmd_shard)
+
+    a = sub.add_parser("assemble", help="guards, reuse of previous shards, combine; rewrite the manifest")
+    a.add_argument("--due", default="[]", help="JSON list from `idx plan`")
+    a.add_argument("--new-dir", type=Path, default=Path("shards"))
+    a.add_argument("--previous-dir", type=Path, default=Path("previous"))
+    a.add_argument("--out", type=Path, default=Path("index.sqlite"))
+    a.add_argument("--release-tag", required=True)
+    a.add_argument("--report", type=Path, help="JSON: changed + outcome per source")
+    a.add_argument("--summary", type=Path, help="Markdown for the job summary")
+    refresh_args(a)
+    a.set_defaults(func=cmd_assemble)
     return p
 
 

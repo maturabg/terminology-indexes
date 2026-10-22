@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "Python Software Foundation, PSF License v2"
 rate_limit: { rps: null, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "decorator", expect: "decorator" }
+  - { query: "global interpreter lock", expect: "global interpreter lock" }
 contact: null
 notes: "Sphinx objects.inv, само std:term. Fetch от пинната версия (3.14), публичният URL е към /3/ (виж docs/decisions.md). objects.inv няма текст — snippet остава празен, докато не се добави parse на glossary.html."

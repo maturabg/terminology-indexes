@@ -1,6 +1,8 @@
 """Rows of the index and the source registry."""
 
+import re
 from dataclasses import dataclass, field
+from datetime import timedelta
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +14,16 @@ KINDS = frozenset({"term", "concept", "document", "spec_section"})
 STATUSES = frozenset({"active", "deprecated", "redirect"})
 LABEL_TYPES = frozenset({"pref", "alt", "hidden", "redirect"})
 SNIPPET_LIMITS = {"none": 0, "short": 200, "full": None}
+
+_PERIOD = re.compile(r"P(\d+)([DWMY])")
+_PERIOD_DAYS = {"D": 1, "W": 7, "M": 30, "Y": 365}
+
+
+def parse_period(text: str) -> timedelta:
+    """``refresh`` from the registry: ``P<n>D|W|M|Y`` (a month is 30 days, a year 365)."""
+    if not (m := _PERIOD.fullmatch(text)):
+        raise ValueError(f"unsupported refresh period {text!r}")
+    return timedelta(days=int(m[1]) * _PERIOD_DAYS[m[2]])
 
 
 class IndexVersionError(RuntimeError):
@@ -71,6 +83,8 @@ class Source:
     snippet_policy: str
     attribution: str
     max_row_drop: float | None
+    refresh: timedelta | None
+    golden: list[dict[str, str]]
     raw: dict[str, Any]
 
     @classmethod
@@ -90,6 +104,8 @@ class Source:
             snippet_policy=raw["snippet_policy"],
             attribution=raw["attribution"],
             max_row_drop=(raw.get("guards") or {}).get("max_row_drop"),
+            refresh=parse_period(raw["refresh"]) if raw.get("refresh") else None,
+            golden=raw.get("golden") or [],
             raw=raw,
         )
 

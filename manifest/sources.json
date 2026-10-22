@@ -1,0 +1,27 @@
+{
+  "schema_version": "1",
+  "norm_version": "1",
+  "built_at": "2026-10-22T21:15:22+00:00",
+  "release_tag": "index-20261022",
+  "index_sha256": "1238bdb69cae4eb13c493bb595a671f896decdb63b2b99d2d3b8cd5ded0e0d7d",
+  "sources": {
+    "nist_csrc": {
+      "snapshot_version": "2026-10-21+9d303c5fc1c8",
+      "fetched_at": "2026-10-22T21:15:05+00:00",
+      "raw_sha256": "9d303c5fc1c8038909e582c2f4daefcb5826d83d910a4473cac7995093395a18",
+      "row_count": 9140,
+      "license": "public_domain",
+      "checked_at": "2026-10-22T21:15:05+00:00",
+      "outcome": "built"
+    },
+    "python_glossary": {
+      "snapshot_version": "3.14+907b9554cd19",
+      "fetched_at": "2026-10-22T21:15:07+00:00",
+      "raw_sha256": "907b9554cd19d698a891f616e53212f7f441556c6c150a87c2902637a97ac53e",
+      "row_count": 177,
+      "license": "open",
+      "checked_at": "2026-10-22T21:15:06+00:00",
+      "outcome": "built"
+    }
+  }
+}

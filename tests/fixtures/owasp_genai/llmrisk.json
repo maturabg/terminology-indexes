@@ -1,0 +1,3 @@
+[
+ {"id": 61010, "slug": "llm01-prompt-injection", "link": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/", "modified": "2025-04-17T12:00:00", "title": {"rendered": "LLM01:2025 Prompt Injection"}, "excerpt": {"rendered": "<p>A fixture risk: user input changes the model&#8217;s behavior.</p>\n"}}
+]

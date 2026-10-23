@@ -8,6 +8,7 @@ iteration: 4
 fetch:
   method: git_sparse
   url: "https://github.com/w3c/webref"
+  branch: curated
   checksum_url: null
 refresh: "P1D"
 langs: [en]

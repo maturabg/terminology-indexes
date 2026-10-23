@@ -1,0 +1,395 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rfc-index xmlns="https://www.rfc-editor.org/rfc-index" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.rfc-editor.org/rfc-index https://www.rfc-editor.org/rfc-index.xsd">
+    <bcp-entry>
+    <doc-id>BCP14</doc-id>
+    <is-also>
+      <doc-id>RFC2119</doc-id>
+      <doc-id>RFC8174</doc-id>
+    </is-also>
+  </bcp-entry>
+  <rfc-not-issued-entry>
+    <doc-id>RFC14</doc-id>
+  </rfc-not-issued-entry>
+  <rfc-entry>
+    <doc-id>RFC1849</doc-id>
+    <title>"Son of 1036": News Article Format and Transmission</title>
+    <author>
+      <name>H. Spencer</name>
+    </author>
+    <date>
+      <month>March</month>
+      <year>2010</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>106</page-count>
+    <keywords>
+      <kw>netnews</kw>
+      <kw>usenet</kw>
+      <kw>rfc 1036</kw>
+      <kw>usefor</kw>
+      <kw>historic</kw>
+    </keywords>
+    <abstract>
+      <p>By the early 1990s, it had become clear that RFC 1036, then the specification for the Interchange of USENET Messages, was badly in need of repair. This "Internet-Draft-to-be", though never formally published at that time, was widely circulated and became the de facto standard for implementors of News Servers and User Agents, rapidly acquiring the nickname "Son of 1036". Indeed, under that name, it could fairly be described as the best-known Internet Draft (n)ever published, and it formed the starting point for the recently adopted Proposed Standards for Netnews.</p>
+      <p>It is being published now in order to provide the historical background out of which those standards have grown. Present-day implementors should be aware that it is NOT NOW APPROPRIATE for use in current implementations. This document defines a Historic Document for the Internet community.</p>
+    </abstract>
+    <draft>draft-spencer-usefor-son-of-1036-01</draft>
+    <obsoleted-by>
+      <doc-id>RFC5536</doc-id>
+      <doc-id>RFC5537</doc-id>
+    </obsoleted-by>
+    <current-status>HISTORIC</current-status>
+    <publication-status>HISTORIC</publication-status>
+    <stream>INDEPENDENT</stream>
+    <doi>10.17487/RFC1849</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC2119</doc-id>
+    <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+    <author>
+      <name>S. Bradner</name>
+    </author>
+    <date>
+      <month>March</month>
+      <year>1997</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>3</page-count>
+    <keywords>
+      <kw>Standards</kw>
+      <kw>Track</kw>
+      <kw>Documents</kw>
+    </keywords>
+    <abstract>
+      <p>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized.  This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</p>
+    </abstract>
+    <draft>draft-bradner-key-words-02</draft>
+    <is-also>
+      <doc-id>BCP14</doc-id>
+    </is-also>
+    <updated-by>
+      <doc-id>RFC8174</doc-id>
+    </updated-by>
+    <current-status>BEST CURRENT PRACTICE</current-status>
+    <publication-status>BEST CURRENT PRACTICE</publication-status>
+    <stream>IETF</stream>
+    <wg_acronym>NON WORKING GROUP</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc2119</errata-url>
+    <doi>10.17487/RFC2119</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC2616</doc-id>
+    <title>Hypertext Transfer Protocol -- HTTP/1.1</title>
+    <author>
+      <name>R. Fielding</name>
+    </author>
+    <author>
+      <name>J. Gettys</name>
+    </author>
+    <author>
+      <name>J. Mogul</name>
+    </author>
+    <author>
+      <name>H. Frystyk</name>
+    </author>
+    <author>
+      <name>L. Masinter</name>
+    </author>
+    <author>
+      <name>P. Leach</name>
+    </author>
+    <author>
+      <name>T. Berners-Lee</name>
+    </author>
+    <date>
+      <month>June</month>
+      <year>1999</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>PS</file-format>
+      <file-format>PDF</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>176</page-count>
+    <keywords>
+      <kw>HTTP</kw>
+      <kw>Hypertext Transfer Protocol</kw>
+      <kw>World Wide Web</kw>
+      <kw>WWW</kw>
+      <kw>hypermedia</kw>
+    </keywords>
+    <abstract>
+      <p>HTTP has been in use by the World-Wide Web global information initiative since 1990.  This specification defines the protocol referred to as "HTTP/1.1", and is an update to RFC 2068. [STANDARDS-TRACK]</p>
+    </abstract>
+    <draft>draft-ietf-http-v11-spec-rev-06</draft>
+    <obsoletes>
+      <doc-id>RFC2068</doc-id>
+    </obsoletes>
+    <obsoleted-by>
+      <doc-id>RFC7230</doc-id>
+      <doc-id>RFC7231</doc-id>
+      <doc-id>RFC7232</doc-id>
+      <doc-id>RFC7233</doc-id>
+      <doc-id>RFC7234</doc-id>
+      <doc-id>RFC7235</doc-id>
+    </obsoleted-by>
+    <updated-by>
+      <doc-id>RFC2817</doc-id>
+      <doc-id>RFC5785</doc-id>
+      <doc-id>RFC6266</doc-id>
+      <doc-id>RFC6585</doc-id>
+    </updated-by>
+    <current-status>DRAFT STANDARD</current-status>
+    <publication-status>DRAFT STANDARD</publication-status>
+    <stream>IETF</stream>
+    <area>app</area>
+    <wg_acronym>http</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc2616</errata-url>
+    <doi>10.17487/RFC2616</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC7230</doc-id>
+    <title>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</title>
+    <author>
+      <name>R. Fielding</name>
+      <title>Editor</title>
+    </author>
+    <author>
+      <name>J. Reschke</name>
+      <title>Editor</title>
+    </author>
+    <date>
+      <month>June</month>
+      <year>2014</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>89</page-count>
+    <keywords>
+      <kw>Hyptertext Transfer Protocol</kw>
+      <kw>HTTP</kw>
+      <kw>HTTP message format</kw>
+    </keywords>
+    <abstract>
+      <p>The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems.  This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.</p>
+    </abstract>
+    <draft>draft-ietf-httpbis-p1-messaging-26</draft>
+    <obsoletes>
+      <doc-id>RFC2145</doc-id>
+      <doc-id>RFC2616</doc-id>
+    </obsoletes>
+    <obsoleted-by>
+      <doc-id>RFC9110</doc-id>
+      <doc-id>RFC9112</doc-id>
+    </obsoleted-by>
+    <updates>
+      <doc-id>RFC2817</doc-id>
+      <doc-id>RFC2818</doc-id>
+    </updates>
+    <updated-by>
+      <doc-id>RFC8615</doc-id>
+    </updated-by>
+    <current-status>PROPOSED STANDARD</current-status>
+    <publication-status>PROPOSED STANDARD</publication-status>
+    <stream>IETF</stream>
+    <area>wit</area>
+    <wg_acronym>httpbis</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc7230</errata-url>
+    <doi>10.17487/RFC7230</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC7540</doc-id>
+    <title>Hypertext Transfer Protocol Version 2 (HTTP/2)</title>
+    <author>
+      <name>M. Belshe</name>
+    </author>
+    <author>
+      <name>R. Peon</name>
+    </author>
+    <author>
+      <name>M. Thomson</name>
+      <title>Editor</title>
+    </author>
+    <date>
+      <month>May</month>
+      <year>2015</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>96</page-count>
+    <keywords>
+      <kw>HTTP</kw>
+      <kw>SPDY</kw>
+      <kw>Web</kw>
+    </keywords>
+    <abstract>
+      <p>This specification describes an optimized expression of the semantics of the Hypertext Transfer Protocol (HTTP), referred to as HTTP version 2 (HTTP/2). HTTP/2 enables a more efficient use of network resources and a reduced perception of latency by introducing header field compression and allowing multiple concurrent exchanges on the same connection. It also introduces unsolicited push of representations from servers to clients.</p>
+      <p>This specification is an alternative to, but does not obsolete, the HTTP/1.1 message syntax. HTTP's existing semantics remain unchanged.</p>
+    </abstract>
+    <draft>draft-ietf-httpbis-http2-17</draft>
+    <obsoleted-by>
+      <doc-id>RFC9113</doc-id>
+    </obsoleted-by>
+    <updated-by>
+      <doc-id>RFC8740</doc-id>
+    </updated-by>
+    <current-status>PROPOSED STANDARD</current-status>
+    <publication-status>PROPOSED STANDARD</publication-status>
+    <stream>IETF</stream>
+    <area>wit</area>
+    <wg_acronym>httpbis</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc7540</errata-url>
+    <doi>10.17487/RFC7540</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC8174</doc-id>
+    <title>Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</title>
+    <author>
+      <name>B. Leiba</name>
+    </author>
+    <date>
+      <month>May</month>
+      <year>2017</year>
+    </date>
+    <format>
+      <file-format>TXT</file-format>
+      <file-format>HTML</file-format>
+    </format>
+    <page-count>4</page-count>
+    <abstract>
+      <p>RFC 2119 specifies common key words that may be used in protocol specifications.  This document aims to reduce the ambiguity by clarifying that only UPPERCASE usage of the key words have the defined special meanings.</p>
+    </abstract>
+    <draft>draft-leiba-rfc2119-update-02</draft>
+    <is-also>
+      <doc-id>BCP14</doc-id>
+    </is-also>
+    <updates>
+      <doc-id>RFC2119</doc-id>
+    </updates>
+    <current-status>BEST CURRENT PRACTICE</current-status>
+    <publication-status>BEST CURRENT PRACTICE</publication-status>
+    <stream>IETF</stream>
+    <wg_acronym>NON WORKING GROUP</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc8174</errata-url>
+    <doi>10.17487/RFC8174</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC9110</doc-id>
+    <title>HTTP Semantics</title>
+    <author>
+      <name>R. Fielding</name>
+      <title>Editor</title>
+    </author>
+    <author>
+      <name>M. Nottingham</name>
+      <title>Editor</title>
+    </author>
+    <author>
+      <name>J. Reschke</name>
+      <title>Editor</title>
+    </author>
+    <date>
+      <month>June</month>
+      <year>2022</year>
+    </date>
+    <format>
+      <file-format>HTML</file-format>
+      <file-format>TXT</file-format>
+      <file-format>PDF</file-format>
+      <file-format>XML</file-format>
+    </format>
+    <page-count>194</page-count>
+    <keywords>
+      <kw>Hypertext Transfer Protocol</kw>
+      <kw>HTTP</kw>
+      <kw>HTTP semantics</kw>
+      <kw>HTTP content</kw>
+      <kw>HTTP method</kw>
+      <kw>HTTP status code</kw>
+    </keywords>
+    <abstract>
+      <p>The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document describes the overall architecture of HTTP, establishes common terminology, and defines aspects of the protocol that are shared by all versions. In this definition are core protocol elements, extensibility mechanisms, and the "http" and "https" Uniform Resource Identifier (URI) schemes.</p>
+      <p>This document updates RFC 3864 and obsoletes RFCs 2818, 7231, 7232, 7233, 7235, 7538, 7615, 7694, and portions of 7230.</p>
+    </abstract>
+    <draft>draft-ietf-httpbis-semantics-19</draft>
+    <is-also>
+      <doc-id>STD97</doc-id>
+    </is-also>
+    <obsoletes>
+      <doc-id>RFC2818</doc-id>
+      <doc-id>RFC7230</doc-id>
+      <doc-id>RFC7231</doc-id>
+      <doc-id>RFC7232</doc-id>
+      <doc-id>RFC7233</doc-id>
+      <doc-id>RFC7235</doc-id>
+      <doc-id>RFC7538</doc-id>
+      <doc-id>RFC7615</doc-id>
+      <doc-id>RFC7694</doc-id>
+    </obsoletes>
+    <updates>
+      <doc-id>RFC3864</doc-id>
+    </updates>
+    <current-status>INTERNET STANDARD</current-status>
+    <publication-status>INTERNET STANDARD</publication-status>
+    <stream>IETF</stream>
+    <area>wit</area>
+    <wg_acronym>httpbis</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc9110</errata-url>
+    <doi>10.17487/RFC9110</doi>
+  </rfc-entry>
+  <rfc-entry>
+    <doc-id>RFC9113</doc-id>
+    <title>HTTP/2</title>
+    <author>
+      <name>M. Thomson</name>
+      <title>Editor</title>
+    </author>
+    <author>
+      <name>C. Benfield</name>
+      <title>Editor</title>
+    </author>
+    <date>
+      <month>June</month>
+      <year>2022</year>
+    </date>
+    <format>
+      <file-format>HTML</file-format>
+      <file-format>TXT</file-format>
+      <file-format>PDF</file-format>
+      <file-format>XML</file-format>
+    </format>
+    <page-count>78</page-count>
+    <keywords>
+      <kw>HTTP</kw>
+      <kw>SPDY</kw>
+      <kw>Web</kw>
+    </keywords>
+    <abstract>
+      <p>This specification describes an optimized expression of the semantics of the Hypertext Transfer Protocol (HTTP), referred to as HTTP version 2 (HTTP/2). HTTP/2 enables a more efficient use of network resources and a reduced latency by introducing field compression and allowing multiple concurrent exchanges on the same connection.</p>
+      <p>This document obsoletes RFCs 7540 and 8740.</p>
+    </abstract>
+    <draft>draft-ietf-httpbis-http2bis-07</draft>
+    <obsoletes>
+      <doc-id>RFC7540</doc-id>
+      <doc-id>RFC8740</doc-id>
+    </obsoletes>
+    <current-status>PROPOSED STANDARD</current-status>
+    <publication-status>PROPOSED STANDARD</publication-status>
+    <stream>IETF</stream>
+    <area>wit</area>
+    <wg_acronym>httpbis</wg_acronym>
+    <errata-url>https://www.rfc-editor.org/errata/rfc9113</errata-url>
+    <doi>10.17487/RFC9113</doi>
+  </rfc-entry>
+</rfc-index>

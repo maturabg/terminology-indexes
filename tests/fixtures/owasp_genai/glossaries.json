@@ -1,0 +1,5 @@
+[
+ {"id": 57921, "slug": "embeddings", "link": "https://genai.owasp.org/glossary/embeddings/", "modified": "2026-10-12T09:15:00", "title": {"rendered": "Embeddings"}, "excerpt": {"rendered": "<p>Embeddings Embeddings are fixture vectors that place similar items close together. [&hellip;]</p>\n"}},
+ {"id": 57932, "slug": "nlp-natural-language-processing", "link": "https://genai.owasp.org/glossary/nlp-natural-language-processing/", "modified": "2025-03-01T10:00:00", "title": {"rendered": "NLP (Natural Language Processing)"}, "excerpt": {"rendered": "<p>NLP (Natural Language Processing) A fixture field of AI about human language.</p>\n"}},
+ {"id": 57940, "slug": "retrieval-augmented-generation-rag", "link": "https://genai.owasp.org/glossary/retrieval-augmented-generation-rag/", "modified": "2025-03-01T10:00:00", "title": {"rendered": "Retrieval&#8211;Augmented Generation (RAG)"}, "excerpt": {"rendered": ""}}
+]

@@ -3,14 +3,14 @@ name: "CNCF Cloud Native Glossary"
 site_no: "19"
 home: "https://glossary.cncf.io/"
 mode: index
-status: planned
+status: active
 iteration: 5
 fetch:
   method: git_sparse
   url: "https://github.com/cncf/glossary"
   checksum_url: null
 refresh: "P7D"
-langs: [en, bg]
+langs: [en]
 kind_default: term
 stable_id: slug
 check: "index_lookup"
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "CNCF Glossary contributors, CC BY 4.0"
 rate_limit: { rps: null, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "API", expect: "application-programming-interface" }
+  - { query: "hypervisor", expect: "hypervisor" }
 contact: null
-notes: "Git (content/<lang>) за кандидати, https://glossary.cncf.io/sitemap.xml като whitelist на публикуваните URL. Да се провери дали има bg превод."
+notes: "Git (content/en/*.md), без чернови (`draft: true`). Sitemap-ът изостава от repo-то (2026-10-23 липсват 3 живи страници), затова не е whitelist. Към 2026-10-23 няма bg превод (16 езика, без bg)."

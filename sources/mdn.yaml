@@ -3,7 +3,7 @@ name: "MDN Glossary"
 site_no: "10"
 home: "https://developer.mozilla.org/en-US/docs/Glossary"
 mode: index
-status: planned
+status: active
 iteration: 5
 fetch:
   method: git_sparse
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "Mozilla Contributors, CC BY-SA 2.5+"
 rate_limit: { rps: null, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "Ajax", expect: "Glossary/AJAX" }
+  - { query: "HOL blocking", expect: "Glossary/Head_of_line_blocking" }
 contact: null
 notes: "Sparse checkout на files/en-us/glossary; URL се строи от slug във frontmatter. Snippet от първия абзац, без кодови примери."

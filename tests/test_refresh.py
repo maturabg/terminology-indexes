@@ -194,13 +194,19 @@ def test_refresh_all_sources(tmp_path: Path) -> None:
     result = run_all(registry, tmp_path, {}, "1")
     assert {sid: r["outcome"] for sid, r in result["sources"].items()} == dict.fromkeys(
         [
+            "cncf_glossary",
             "ecma262",
             "git_glossary",
             "google_ml",
+            "mdn",
             "mitre_cwe",
             "nist_csrc",
+            "nist_dads",
+            "owasp_cheatsheets",
+            "owasp_genai",
             "postgresql_glossary",
             "python_glossary",
+            "rfc_editor",
             "unicode_glossary",
             "webref",
         ],

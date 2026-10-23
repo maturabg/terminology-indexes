@@ -3,7 +3,7 @@ name: "RFC Editor"
 site_no: "7"
 home: "https://www.rfc-editor.org/"
 mode: index
-status: planned
+status: active
 iteration: 5
 fetch:
   method: http_file
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "IETF Trust / RFC Editor"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "HTTP Semantics", expect: "RFC9110" }
+  - { query: "BCP 14", expect: "RFC2119" }
 contact: null
 notes: "Линк към цял документ (/info/rfcNNNN/), не към термин. Snippet = непроменен откъс от abstract с посочване на RFC (TLP §3.c). Obsoleted-by → status deprecated + replaced_by."

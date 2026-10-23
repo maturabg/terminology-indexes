@@ -16,7 +16,7 @@ uv run pytest
 
 `idx build` тегли и парсва посочените източници, после слива всички `shards/shard-*.sqlite` в `index.sqlite`. `idx combine` само слива.
 
-Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`. Webref се тегли с `git` (shallow sparse clone).
+Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`, `mdn`, `cncf_glossary`, `owasp_cheatsheets`, `owasp_genai`, `rfc_editor`, `nist_dads`. Webref, MDN, CNCF и OWASP Cheat Sheets се теглят с `git` (shallow sparse clone).
 
 ## Нощен refresh
 
@@ -58,7 +58,7 @@ with load_providers(index) as registry:        # IndexVersionError при дру
 - `src/terminology_indexes/contract.py` — `Provider`, `Candidate`, `LinkRecord`, `CheckResult`.
 - `src/terminology_indexes/providers/` — `load_providers()`, `Registry.search_all()` / `check()`, `IndexProvider`; live provider-ите се записват в `LIVE_PROVIDERS`.
 - `src/terminology_indexes/release.py` — `download_release()`: сваля и проверява `index.sqlite` от release.
-- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи) и `text.py` (етикети от заглавие, dedupe по `label_key`).
+- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи), `git_sparse.py` (shallow sparse clone, хеш на прочетените файлове), `markdown.py` (frontmatter, заглавия и абзаци извън code fences) и `text.py` (етикети от заглавие, dedupe по `label_key`).
 - `src/terminology_indexes/refresh.py` — `plan`, `refresh_source`, `assemble`: стъпките на нощния refresh.
 - `manifest/sources.json` — последният manifest; пише го само `refresh.yml`.
 - `.github/workflows/refresh.yml` — нощен cron + `workflow_dispatch`: plan → fetch (matrix) → combine → publish → commit → issues.

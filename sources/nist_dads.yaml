@@ -3,10 +3,10 @@ name: "NIST Dictionary of Algorithms and Data Structures"
 site_no: "13"
 home: "https://xlinux.nist.gov/dads/"
 mode: index
-status: planned
+status: active
 iteration: 5
 fetch:
-  method: html_index
+  method: html_page
   url: "https://xlinux.nist.gov/dads/"
   checksum_url: null
 refresh: "P30D"
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "NIST DADS"
 rate_limit: { rps: 0.2, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "abstract data type", expect: "abstractDataType" }
+  - { query: "DAG", expect: "directAcycGraph" }
 contact: null
-notes: "Азбучни HTML индекси, бавен crawl. Записи с бележка „CRC Press“ или друг copyright — без snippet."
+notes: "Целият азбучен индекс е началната страница (fetch.url): заглавие → URL, „X: see Y“ → redirect етикет. Дефинициите (1100+ страници) не се теглят — при 0.2 rps това е над час на refresh, затова на практика няма snippet. Ако се добавят: записи с бележка „CRC Press“ или друг copyright — без snippet."

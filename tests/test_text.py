@@ -31,3 +31,11 @@ def test_dedupe_by_term_key() -> None:
         Label("Byte Order Mark", "en", "alt"),
         Label("BOM", "en", "alt"),
     ]
+
+
+def test_qualifier_is_not_an_abbreviation() -> None:
+    # "DOM" looks like an abbreviation but does not abbreviate "Node"
+    assert title_variants("Node (DOM)") == ["Node (DOM)", "Node"]
+    assert title_variants("Block (CSS)") == ["Block (CSS)", "Block"]
+    assert title_variants("XMLHttpRequest (XHR)")[1:] == ["XMLHttpRequest", "XHR"]
+    assert title_variants("DSL (Domain-Specific Language)")[1:] == ["DSL", "Domain-Specific Language"]

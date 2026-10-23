@@ -3,7 +3,7 @@ name: "OWASP GenAI Security Project"
 site_no: "17b"
 home: "https://genai.owasp.org/"
 mode: index
-status: planned
+status: active
 iteration: 5
 fetch:
   method: wp_rest
@@ -12,7 +12,7 @@ fetch:
 refresh: "P7D"
 langs: [en]
 kind_default: term
-stable_id: page_anchor
+stable_id: slug
 check: "index_lookup"
 license:
   class: cc_by_sa
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "OWASP GenAI, CC BY-SA 4.0"
 rate_limit: { rps: 0.5, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "embeddings", expect: "glossaries/embeddings" }
+  - { query: "prompt injection", expect: "llmrisk/llm01-prompt-injection" }
 contact: null
-notes: "Glossary snapshot през WordPress REST. Термините обикновено нямат отделен permalink — линкът е към страницата."
+notes: "WordPress REST: post types glossaries (речникът, всеки термин има собствена страница) и llmrisk (текущият OWASP Top 10 for LLM). Snippet от excerpt без повтореното заглавие."

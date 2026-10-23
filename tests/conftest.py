@@ -59,6 +59,7 @@ DIRECTORIES = {
 }
 RFC_INDEX = FIXTURES / "rfc_editor.rfc-index.xml"
 IATE_ZIP = FIXTURES / "iate.zip"
+ETYMONLINE = FIXTURES / "etymonline.words.xml"
 
 
 def load_source(source_id: str) -> Source:
@@ -84,6 +85,8 @@ def fixture_snapshot(adapter):
             return adapter.snapshot(RFC_INDEX, sha256_file(RFC_INDEX))
         case "iate":
             return adapter.snapshot(IATE_ZIP)
+        case "etymonline":
+            return adapter.snapshot(ETYMONLINE)
         case sid if sid in HTML_PAGES:
             return adapter.snapshot(HTML_PAGES[sid])
         case sid if sid in DIRECTORIES:

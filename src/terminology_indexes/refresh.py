@@ -114,7 +114,7 @@ def shard_rows(shard: Path) -> int:
 def golden_failures(source: Source, index: Path) -> list[str]:
     """``golden`` queries from the registry whose expected ``external_id`` is not found."""
     failures = []
-    with load_providers(index, env={}) as registry:
+    with load_providers(index, env={}, live=False) as registry:
         provider = registry.providers.get(source.id)
         for g in source.golden:
             found = [c.external_id for c in provider.search(g["query"], limit=10)] if provider else []

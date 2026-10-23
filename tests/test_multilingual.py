@@ -98,7 +98,7 @@ def test_bilingual_bonus(tmp_path: Path) -> None:
         shards.append(shard)
     index = tmp_path / "index.sqlite"
     combine(shards, index, "index-test")
-    with load_providers(index, env={}) as registry:
+    with load_providers(index, env={}, live=False) as registry:
         plain = registry.search_all("firewall", lang="en")
         assert [(h.external_id, h.match, h.also_matched) for h in plain] == [
             ("60331", "exact", None),

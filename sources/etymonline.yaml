@@ -3,7 +3,7 @@ name: "Online Etymology Dictionary"
 site_no: "20"
 home: "https://www.etymonline.com/"
 mode: index
-status: planned
+status: active
 iteration: 7
 fetch:
   method: sitemap
@@ -22,5 +22,8 @@ snippet_policy: none
 attribution: "Etymonline"
 rate_limit: { rps: 0.2, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "firewall", expect: "firewall" }
+  - { query: "e mail", expect: "e-mail" }
 contact: null
-notes: "Само каталог лема → URL (/word/{lemma}) от sitemap, без съдържание. Вътрешните /api/ маршрути не се ползват."
+notes: "Само каталог лема → URL (/word/{lemma}) от sitemap (/sitemap.xml → /sitemaps/words-en.xml, ~47 000 леми), без съдържание. robots.txt позволява /word/ и обявява sitemap-а. Вътрешните /api/ маршрути не се ползват. Хешът е на лемите — lastmod се мени и без нова дума."

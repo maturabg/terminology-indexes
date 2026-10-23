@@ -30,7 +30,7 @@ class IndexProvider:
         self.snapshot_version = snapshot_version
 
     def __repr__(self) -> str:
-        return f"IndexProvider({self.id!r}, {self.snapshot_version!r})"
+        return f"{type(self).__name__}({self.id!r}, {self.snapshot_version!r})"
 
     def search(self, query: str, *, lang: str | None = None, limit: int = 5) -> list[Candidate]:
         return [

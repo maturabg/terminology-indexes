@@ -8,6 +8,7 @@ from terminology_indexes.model import Source
 ADAPTERS = {
     "cncf_glossary": "terminology_indexes.ingest.cncf_glossary:CncfGlossary",
     "ecma262": "terminology_indexes.ingest.ecma262:Ecma262",
+    "etymonline": "terminology_indexes.ingest.etymonline:Etymonline",
     "eom": "terminology_indexes.ingest.eom:Eom",
     "eurovoc": "terminology_indexes.ingest.eurovoc:Eurovoc",
     "git_glossary": "terminology_indexes.ingest.git_glossary:GitGlossary",

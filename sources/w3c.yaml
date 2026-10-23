@@ -3,7 +3,7 @@ name: "W3C (спецификации)"
 site_no: "8"
 home: "https://www.w3.org/TR/"
 mode: live
-status: planned
+status: active
 iteration: 7
 fetch: null
 live:
@@ -24,4 +24,4 @@ attribution: "W3C"
 rate_limit: { rps: 10, daily: null }
 guards: { max_row_drop: 0.2 }
 contact: null
-notes: "Само линк към цяла спецификация; термините на W3C идват от webref. Лимит на API: 6000 заявки / 10 мин."
+notes: "Live provider (providers/w3c.py). API-то няма търсене: списъкът на всички ~1 700 спецификации се чете веднъж (2 заявки) и се търси локално по заглавие и shortname; Retired не се предлагат. Само линк към цяла спецификация; термините на W3C идват от webref. Лимит на API: 6000 заявки / 10 мин."

@@ -3,7 +3,7 @@ name: "ЛЕКСИТ (ИБЕ при БАН)"
 site_no: "1"
 home: "https://ibl.bas.bg/dictionary_portal/"
 mode: live
-status: planned
+status: active
 iteration: 7
 fetch: null
 live:
@@ -24,4 +24,4 @@ attribution: "Институт за български език „Проф. Л�
 rate_limit: { rps: 0.2, daily: 500 }
 guards: { max_row_drop: 0.2 }
 contact: "ИБЕ — писмо за разрешение (итерация 9)"
-notes: "Няма API и export; линкът е към резултатите от търсене. check = непразен резултат. Всички права запазени — само линк, без текст."
+notes: "Live provider (providers/lexit.py). Няма API и export; линкът е към страницата с резултати /dictionary_portal/lang/bg/<дума>, само за заявки на кирилица. check = непразен резултат. Всички права запазени — само линк, без текст."

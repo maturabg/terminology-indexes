@@ -3,7 +3,7 @@ name: "EUR-Lex / Cellar"
 site_no: "23"
 home: "https://eur-lex.europa.eu/"
 mode: live
-status: planned
+status: active
 iteration: 7
 fetch: null
 live:
@@ -24,4 +24,4 @@ attribution: "EUR-Lex, © Европейски съюз"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
 contact: null
-notes: "Първо Cellar SPARQL (без ключ). SOAP Search Webservice иска регистрация — secret EURLEX_SOAP_USER/EURLEX_SOAP_PASS по-късно. check през Cellar REST."
+notes: "Live provider (providers/eurlex.py). Cellar SPARQL (без ключ): bif:contains по заглавията, само сектор 3 (R, L, D), без поправки; exact = краткото име в скоби. check: Cellar REST /resource/celex/<CELEX> (303 = ok, 404 = dead); eur-lex.europa.eu връща 202 (bot challenge) на скриптове. SOAP Search Webservice иска регистрация — secret EURLEX_SOAP_USER/EURLEX_SOAP_PASS по-късно."

@@ -10,6 +10,7 @@ uv run idx build --source python_glossary --source mitre_cwe   # raw/ → shards
 uv run idx query "decorator"                # search_all: exact > alias > FTS, лимит по източник
 uv run idx query firewall --lang en --translation "защитна стена"   # двуезичен бонус
 uv run idx check python_glossary decorator https://docs.python.org/3/glossary.html#term-decorator
+uv run idx query firewall --no-live          # само индексът, без live provider-ите
 uv run idx fetch --dest dl                  # последният release → dl/index.sqlite (проверен SHA-256)
 uv run idx manifest
 uv run pytest
@@ -17,7 +18,9 @@ uv run pytest
 
 `idx build` тегли и парсва посочените източници, после слива всички `shards/shard-*.sqlite` в `index.sqlite`. `idx combine` само слива.
 
-Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`, `mdn`, `cncf_glossary`, `owasp_cheatsheets`, `owasp_genai`, `rfc_editor`, `nist_dads`, `iate`, `eurovoc`, `wiktionary`. Webref, MDN, CNCF и OWASP Cheat Sheets се теглят с `git` (shallow sparse clone). `eom` е `paused` (сайтът връща 502).
+Активни индексни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`, `mdn`, `cncf_glossary`, `owasp_cheatsheets`, `owasp_genai`, `rfc_editor`, `nist_dads`, `iate`, `eurovoc`, `wiktionary`, `etymonline`.
+
+Live provider-и (питат API-то при всяко `search` / `check`, без ключ): `wikidata`, `w3c`, `eurlex`, `lexit`. `wiktionary` търси в индекса, а `check` проверява live езиковата секция по `pageid`. Webref, MDN, CNCF и OWASP Cheat Sheets се теглят с `git` (shallow sparse clone). `eom` е `paused` (сайтът връща 502).
 
 ## Нощен refresh
 
@@ -37,7 +40,7 @@ uv run idx assemble --due '["nist_csrc"]' --previous-dir previous --release-tag 
 ## За консуматора (enrichment)
 
 ```sh
-uv add "terminology-indexes @ git+https://github.com/maturabg/terminology-indexes@lib-v0.2.0"
+uv add "terminology-indexes @ git+https://github.com/maturabg/terminology-indexes@lib-v0.3.0"
 ```
 
 ```python
@@ -51,7 +54,14 @@ with load_providers(index) as registry:        # IndexVersionError при дру
     result = registry.check(LinkRecord(hits[0].source, hits[0].external_id, hits[0].url))
 ```
 
-`search_all` и `check` не казват дали отговорът е от индекса или от API. Договорът е в `contract.py`; библиотеката се версионира с tag `lib-vX.Y.Z`, данните — с release `index-YYYYMMDD`.
+`search_all` и `check` не казват дали отговорът е от индекса или от API. Live provider-ите се питат паралелно (всеки със своя rate limit), `snapshot_version` на техните кандидати е `live:<дата>`. `load_providers(index, live=False)` ги изключва. Мрежова грешка в `check` е `unknown`, никога `dead`.
+
+| Live | Търсене | `external_id` / URL | `check` |
+| --- | --- | --- | --- |
+| `wikidata` | `wbsearchentities`; само със статия в EN/BG Уикипедия; snippet = описанието (CC0) | QID / статията на езика на заявката | QID: изтрит = `dead`, слят = `ok` с reason, преименувана статия = `moved` |
+| `w3c` | списъкът на всички спецификации (веднъж), по заглавие и shortname; без Retired | shortname / `https://www.w3.org/TR/<shortname>/` | 404 = `dead`, преименуван shortname = `moved`, Retired = `ok` с reason |
+| `eurlex` | Cellar SPARQL по заглавие; регламенти, директиви, решения; `exact` = краткото име в скоби | CELEX / EUR-Lex страницата | Cellar REST: 303 = `ok`, 404 = `dead` |
+| `lexit` | само кирилица, лимит 500 заявки на ден | основната форма / страницата с резултати | непразен резултат | Договорът е в `contract.py`; библиотеката се версионира с tag `lib-vX.Y.Z`, данните — с release `index-YYYYMMDD`.
 
 ## Структура
 
@@ -59,7 +69,7 @@ with load_providers(index) as registry:        # IndexVersionError при дру
 - `src/terminology_indexes/normalize.py` — `normalize_term()` (`label_norm`) и `term_key()` (`label_key`); всяка промяна вдига `NORM_VERSION`.
 - `src/terminology_indexes/schema.sql` — схемата; `SCHEMA_VERSION` е в `model.py`.
 - `src/terminology_indexes/contract.py` — `Provider`, `Candidate`, `LinkRecord`, `CheckResult`.
-- `src/terminology_indexes/providers/` — `load_providers()`, `Registry.search_all()` / `check()`, `IndexProvider`; live provider-ите се записват в `LIVE_PROVIDERS`.
+- `src/terminology_indexes/providers/` — `load_providers()`, `Registry.search_all()` / `check()`, `IndexProvider`; live provider-ите се записват в `LIVE_PROVIDERS`, индексни с live `check` — в `INDEX_PROVIDERS`. `live.py` е общото: HTTP с User-Agent и rate limit от регистъра (тест сверява `api`, `rps`, `daily` с yaml-а), генеричните HTTP правила за `check`.
 - `src/terminology_indexes/release.py` — `download_release()`: сваля и проверява `index.sqlite` от release.
 - `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи), `git_sparse.py` (shallow sparse clone, хеш на прочетените файлове), `markdown.py` (frontmatter, заглавия и абзаци извън code fences), `mediawiki.py` (MediaWiki API: страниране, retry, URL на страница) и `text.py` (етикети от заглавие, dedupe по `label_key`).
 - `src/terminology_indexes/refresh.py` — `plan`, `refresh_source`, `assemble`: стъпките на нощния refresh.

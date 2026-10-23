@@ -40,14 +40,14 @@ def cmd_combine(args: argparse.Namespace) -> int:
     return 0
 
 
-def _registry(index: Path):
-    if not index.exists():
-        raise BuildError(f"{index} not found; run `idx build` or `idx fetch` first")
-    return load_providers(index)
+def _registry(args: argparse.Namespace):
+    if not args.index.exists():
+        raise BuildError(f"{args.index} not found; run `idx build` or `idx fetch` first")
+    return load_providers(args.index, live=not args.no_live)
 
 
 def cmd_query(args: argparse.Namespace) -> int:
-    with _registry(args.index) as registry:
+    with _registry(args) as registry:
         hits = registry.search_all(
             args.text,
             translation=args.translation,
@@ -66,7 +66,7 @@ def cmd_query(args: argparse.Namespace) -> int:
 
 
 def cmd_check(args: argparse.Namespace) -> int:
-    with _registry(args.index) as registry:
+    with _registry(args) as registry:
         result = registry.check(LinkRecord(args.source, args.external_id, args.url))
     print(json.dumps(asdict(result), ensure_ascii=False))
     return 0 if result.status == "ok" else 1
@@ -167,6 +167,7 @@ def parser() -> argparse.ArgumentParser:
     q.add_argument("--limit", type=int, default=10)
     q.add_argument("--per-source", type=int, default=3)
     q.add_argument("--json", action="store_true")
+    q.add_argument("--no-live", action="store_true", help="index only: no live providers")
     q.set_defaults(func=cmd_query)
 
     k = sub.add_parser("check", help="check one stored link against the index")
@@ -174,6 +175,7 @@ def parser() -> argparse.ArgumentParser:
     k.add_argument("external_id")
     k.add_argument("url")
     k.add_argument("--index", type=Path, default=Path("index.sqlite"))
+    k.add_argument("--no-live", action="store_true", help="index only: no live providers or live checks")
     k.set_defaults(func=cmd_check)
 
     f = sub.add_parser("fetch", help="download and verify index.sqlite from a release (GH_TOKEN if private)")

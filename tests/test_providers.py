@@ -53,7 +53,7 @@ def two_sources(index: Path, python_glossary) -> Path:
 
 
 def test_registry_has_one_provider_per_indexed_source(two_sources: Path) -> None:
-    with load_providers(two_sources, env={}) as registry:
+    with load_providers(two_sources, env={}, live=False) as registry:
         assert sorted(registry.providers) == ["demo", "python_glossary"]
         assert all(isinstance(p, Provider) for p in registry.providers.values())
         hit = registry.providers["python_glossary"].search("decorator")[0]
@@ -71,7 +71,7 @@ def test_registry_has_one_provider_per_indexed_source(two_sources: Path) -> None
 
 
 def test_search_all_ranks_exact_alias_fts(two_sources: Path) -> None:
-    with load_providers(two_sources, env={}) as registry:
+    with load_providers(two_sources, env={}, live=False) as registry:
         hits = registry.search_all("decorator", per_source=3)
         assert [(h.source, h.external_id, h.match) for h in hits] == [
             ("demo", "decorator", "exact"),
@@ -104,7 +104,7 @@ def test_search_all_ranks_exact_alias_fts(two_sources: Path) -> None:
     ],
 )
 def test_check(two_sources: Path, link: LinkRecord, expected: CheckResult) -> None:
-    with load_providers(two_sources, env={}) as registry:
+    with load_providers(two_sources, env={}, live=False) as registry:
         assert registry.check(link) == expected
 
 
@@ -112,7 +112,7 @@ def test_refuses_other_schema_version(index: Path) -> None:
     with sqlite3.connect(index) as conn:
         conn.execute("UPDATE meta SET value = '99' WHERE key = 'schema_version'")
     with pytest.raises(IndexVersionError, match="schema_version '99'"):
-        load_providers(index, env={})
+        load_providers(index, env={}, live=False)
 
 
 class FakeLive:

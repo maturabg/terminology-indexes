@@ -1,10 +1,37 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-10-22T21:15:22+00:00",
-  "release_tag": "index-20261022",
-  "index_sha256": "1238bdb69cae4eb13c493bb595a671f896decdb63b2b99d2d3b8cd5ded0e0d7d",
+  "built_at": "2026-10-23T08:56:16+00:00",
+  "release_tag": "index-20261023",
+  "index_sha256": "c5347359ffd4395d6bc524498f5bd141d59c10f321008441baa0edc6e3c12698",
   "sources": {
+    "ecma262": {
+      "snapshot_version": "2.2.3205+ea5b1329a7da",
+      "fetched_at": "2026-10-23T08:53:56+00:00",
+      "raw_sha256": "ea5b1329a7da6a7d13432b2d5deedb846e4e57ad99b81b2b355be97f98d55ab9",
+      "row_count": 2746,
+      "license": "open",
+      "checked_at": "2026-10-23T08:53:55+00:00",
+      "outcome": "built"
+    },
+    "git_glossary": {
+      "snapshot_version": "master+0635310817aa",
+      "fetched_at": "2026-10-23T08:53:56+00:00",
+      "raw_sha256": "0635310817aac48a1b2087e957f60be0d95d05834670460143dbde85c8a7be7e",
+      "row_count": 92,
+      "license": "copyleft",
+      "checked_at": "2026-10-23T08:53:55+00:00",
+      "outcome": "built"
+    },
+    "google_ml": {
+      "snapshot_version": "0db9b23238ed",
+      "fetched_at": "2026-10-23T08:54:06+00:00",
+      "raw_sha256": "0db9b23238ed3fa40d68e24ccb0ed885492059659c1644fe59ec5e9304190fad",
+      "row_count": 739,
+      "license": "cc_by",
+      "checked_at": "2026-10-23T08:53:56+00:00",
+      "outcome": "built"
+    },
     "nist_csrc": {
       "snapshot_version": "2026-10-21+9d303c5fc1c8",
       "fetched_at": "2026-10-22T21:15:05+00:00",
@@ -12,6 +39,15 @@
       "row_count": 9140,
       "license": "public_domain",
       "checked_at": "2026-10-22T21:15:05+00:00",
+      "outcome": "not_due"
+    },
+    "postgresql_glossary": {
+      "snapshot_version": "dbcc3c557784",
+      "fetched_at": "2026-10-23T08:53:57+00:00",
+      "raw_sha256": "dbcc3c557784b0659c44b592fb528d3bb5772ea83a5e0d7d7ab0b4d4d553bc14",
+      "row_count": 130,
+      "license": "open",
+      "checked_at": "2026-10-23T08:53:55+00:00",
       "outcome": "built"
     },
     "python_glossary": {
@@ -21,6 +57,24 @@
       "row_count": 177,
       "license": "open",
       "checked_at": "2026-10-22T21:15:06+00:00",
+      "outcome": "not_due"
+    },
+    "unicode_glossary": {
+      "snapshot_version": "42a7c5ee230a",
+      "fetched_at": "2026-10-23T08:53:58+00:00",
+      "raw_sha256": "42a7c5ee230aaca391e5db5f96746330f34208c2205e1ed0f41482f17d017204",
+      "row_count": 512,
+      "license": "restricted",
+      "checked_at": "2026-10-23T08:53:58+00:00",
+      "outcome": "built"
+    },
+    "webref": {
+      "snapshot_version": "2026-10-23+6966d184469b",
+      "fetched_at": "2026-10-23T08:54:02+00:00",
+      "raw_sha256": "3b68f301b5b68aeff0f18064606e51fcef28163f9a4d70f7e535e780dcd33854",
+      "row_count": 8282,
+      "license": "cc_by",
+      "checked_at": "2026-10-23T08:53:58+00:00",
       "outcome": "built"
     }
   }

@@ -1,0 +1,38 @@
+{
+ "spec": {
+  "title": "CSS Color Module Level 4",
+  "url": "https://drafts.csswg.org/css-color-4/"
+ },
+ "dfns": [
+  {
+   "id": "typedef-color",
+   "href": "https://drafts.csswg.org/css-color-4/#typedef-color",
+   "linkingText": [
+    "<color>"
+   ],
+   "localLinkingText": [],
+   "type": "type",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "propdef-color",
+   "href": "https://drafts.csswg.org/css-color-4/#propdef-color",
+   "linkingText": [
+    "color"
+   ],
+   "localLinkingText": [],
+   "type": "property",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  }
+ ]
+}

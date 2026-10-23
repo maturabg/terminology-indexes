@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "Search buffer index and source adapters for the en2bg technical dictionary"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = ["pyyaml>=6.0.2"]
+dependencies = [
+    "beautifulsoup4>=4.13",
+    "pyyaml>=6.0.2",
+]
 
 [project.scripts]
 idx = "terminology_indexes.cli:main"

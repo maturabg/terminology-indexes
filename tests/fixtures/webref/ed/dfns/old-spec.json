@@ -1,0 +1,23 @@
+{
+ "spec": {
+  "title": "Old",
+  "url": "https://example.org/old/"
+ },
+ "dfns": [
+  {
+   "id": "x",
+   "href": "https://example.org/old/#x",
+   "linkingText": [
+    "old thing"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  }
+ ]
+}

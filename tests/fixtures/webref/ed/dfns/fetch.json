@@ -1,0 +1,38 @@
+{
+ "spec": {
+  "title": "Fetch Standard",
+  "url": "https://fetch.spec.whatwg.org/"
+ },
+ "dfns": [
+  {
+   "id": "http-access-control-allow-origin",
+   "href": "https://fetch.spec.whatwg.org/#http-access-control-allow-origin",
+   "linkingText": [
+    "Access-Control-Allow-Origin"
+   ],
+   "localLinkingText": [],
+   "type": "http-header",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-request",
+   "href": "https://fetch.spec.whatwg.org/#concept-request",
+   "linkingText": [
+    "request"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  }
+ ]
+}

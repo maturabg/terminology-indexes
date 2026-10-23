@@ -125,7 +125,7 @@ jobs:
         id: assemble
         run: |
           uv run idx assemble --due "$DUE" --new-dir new --previous-dir previous \
-            --release-tag "$TAG" --report report.json --summary summary.md $FORCE
+            --release-tag "$TAG" --report report.json --summary summary.md --notice NOTICE.md $FORCE
           echo "changed=$(jq -r .changed report.json)" >> "$GITHUB_OUTPUT"
           cat summary.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -138,6 +138,7 @@ jobs:
             zstd -19 -T0 -q "$f" -o "dist/$(basename "$f").zst"
           done
           cp manifest/sources.json dist/manifest.json
+          cp NOTICE.md dist/NOTICE.md
           size=$(stat -c %s dist/index.sqlite.zst)
           if [ "$size" -gt 1610612736 ]; then
             echo "::warning::index.sqlite.zst is $size bytes; the release asset limit is 2 GiB"

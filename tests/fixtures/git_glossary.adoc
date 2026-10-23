@@ -1,0 +1,25 @@
+[[def_alternate_object_database]]alternate object database::
+	Fixture text: a <<def_repository,repository>> borrows objects.
+
+[[def_cache]]cache::
+	Obsolete for: <<def_index,index>>.
+
+[[def_commit]]commit::
+	Fixture text for the noun.
++
+Fixture text for the verb.
+
+[[def_commit_graph_general]]commit graph concept, representations and usage::
+	Fixture text.
+
+[[def_commit-ish]]commit-ish (also committish)::
+	Fixture text.
+
+[[def_index]]index::
+	Fixture text.
+
+[[def_object_identifier]]object identifier, object ID, oid::
+	Synonyms for <<def_object_name,object name>>.
+
+[[def_object_name]]object name::
+	Fixture text.

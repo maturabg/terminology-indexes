@@ -1,0 +1,23 @@
+{
+ "spec": {
+  "title": "ECMAScript",
+  "url": "https://tc39.es/ecma262/"
+ },
+ "dfns": [
+  {
+   "id": "sec-realm",
+   "href": "https://tc39.es/ecma262/#sec-realm",
+   "linkingText": [
+    "realm"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  }
+ ]
+}

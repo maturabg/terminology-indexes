@@ -5,31 +5,27 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
-from conftest import INV, ROOT
+from conftest import ROOT
 
 from terminology_indexes.build import BuildError
 from terminology_indexes.cli import main
-from terminology_indexes.ingest.base import sha256_file
 from terminology_indexes.ingest.nist_csrc import NistCsrc
-from terminology_indexes.ingest.python_glossary import PythonGlossary
 from terminology_indexes.model import load_registry, parse_period
-from terminology_indexes.refresh import assemble, plan, read_json, refresh_source, shard_name
+from terminology_indexes.refresh import assemble, notice, plan, read_json, refresh_source, shard_name
 
 NOW = datetime(2026, 10, 18, 20, 47, tzinfo=UTC)
 
 
 @pytest.fixture
 def registry():
-    return load_registry(ROOT / "sources")
+    """Two sources are enough for the refresh logic; ``test_refresh_all_sources`` runs every one."""
+    full = load_registry(ROOT / "sources")
+    return {sid: full[sid] for sid in ("nist_csrc", "python_glossary")}
 
 
 @pytest.fixture(autouse=True)
-def offline(monkeypatch):
-    """``fetch`` returns the committed fixtures instead of downloading."""
-    from conftest import NIST_ZIP
-
-    monkeypatch.setattr(NistCsrc, "fetch", lambda self, raw_dir: self.snapshot(NIST_ZIP))
-    monkeypatch.setattr(PythonGlossary, "fetch", lambda self, raw_dir: self.snapshot(INV, sha256_file(INV)))
+def _offline(offline):
+    pass
 
 
 def seen(**checked: timedelta) -> dict:
@@ -192,6 +188,30 @@ def test_golden_guard(registry, tmp_path: Path) -> None:
     assert result["sources"]["nist_csrc"]["message"].startswith("golden: 'firewall' did not find 'firewall'")
 
 
+def test_refresh_all_sources(tmp_path: Path) -> None:
+    """Every buildable source, offline: the fixtures pass their golden queries, alone and combined."""
+    registry = load_registry(ROOT / "sources")
+    result = run_all(registry, tmp_path, {}, "1")
+    assert {sid: r["outcome"] for sid, r in result["sources"].items()} == dict.fromkeys(
+        [
+            "ecma262",
+            "git_glossary",
+            "google_ml",
+            "mitre_cwe",
+            "nist_csrc",
+            "postgresql_glossary",
+            "python_glossary",
+            "unicode_glossary",
+            "webref",
+        ],
+        "built",
+    )
+    text = notice(registry, result["manifest"])
+    assert text.startswith("# Notices for index-1")
+    assert "## MITRE CWE (`mitre_cwe`)" in text and "reproduce MITRE's copyright designation" in text
+    assert "- Attribution: Google, CC BY 4.0" in text
+
+
 def test_cli_cycle(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
     (tmp_path / "sources").symlink_to(ROOT / "sources")
@@ -200,7 +220,8 @@ def test_cli_cycle(tmp_path: Path, monkeypatch) -> None:
     assert main(["shard", "python_glossary"]) == 0
     due = json.dumps(["nist_csrc", "python_glossary"])
     args = ["assemble", "--due", due, "--release-tag", "index-t", "--report", "r.json", "--summary", "s.md"]
-    assert main(args) == 0
+    assert main([*args, "--notice", "NOTICE.md"]) == 0
     assert read_json(tmp_path / "manifest" / "sources.json")["release_tag"] == "index-t"
     assert read_json(tmp_path / "r.json")["changed"] is True
     assert "| nist_csrc | built | 9 |" in (tmp_path / "s.md").read_text()
+    assert "## NIST CSRC Glossary (`nist_csrc`)" in (tmp_path / "NOTICE.md").read_text()

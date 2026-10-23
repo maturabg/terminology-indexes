@@ -3,7 +3,7 @@ name: "MITRE CWE"
 site_no: "18"
 home: "https://cwe.mitre.org/"
 mode: index
-status: planned
+status: active
 iteration: 4
 fetch:
   method: http_zip
@@ -22,5 +22,15 @@ snippet_policy: short
 attribution: "CWE™ © The MITRE Corporation"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "XSS", expect: "CWE-79" }
+  - { query: "CWE-89", expect: "CWE-89" }
 contact: null
-notes: "Release-ът трябва да носи copyright и Terms of Use на MITRE. Deprecated → status deprecated + replaced_by."
+notice: |
+  CWE™ © The MITRE Corporation. CWE is a trademark of The MITRE Corporation.
+  CWE Terms of Use (https://cwe.mitre.org/about/termsofuse.html): CWE is free to use by any organization or
+  individual for any research, development, and/or commercial purposes, per these CWE Terms of Use. Accordingly,
+  The MITRE Corporation hereby grants you a non-exclusive, royalty-free license to use CWE for research,
+  development, and commercial purposes. Any copy you make for such purposes is authorized on the condition that you
+  reproduce MITRE's copyright designation and this license in any such copy.
+notes: "Weakness, Category, View; external_id `CWE-<n>`, който е и alt етикет. Alternate_Terms → alt. Deprecated → status deprecated; replaced_by само ако текстът сочи точно един активен запис, който не е View. Obsolete остава active (страницата съществува), Status е в extra. NOTICE.md в release-а носи copyright и Terms of Use на MITRE."

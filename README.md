@@ -6,7 +6,7 @@
 
 ```sh
 uv sync
-uv run idx build --source python_glossary --source nist_csrc   # raw/ → shards/shard-<id>.sqlite → index.sqlite
+uv run idx build --source python_glossary --source mitre_cwe   # raw/ → shards/shard-<id>.sqlite → index.sqlite
 uv run idx query "decorator"                # search_all: exact > alias > FTS, лимит по източник
 uv run idx check python_glossary decorator https://docs.python.org/3/glossary.html#term-decorator
 uv run idx fetch --dest dl                  # последният release → dl/index.sqlite (проверен SHA-256)
@@ -15,6 +15,8 @@ uv run pytest
 ```
 
 `idx build` тегли и парсва посочените източници, после слива всички `shards/shard-*.sqlite` в `index.sqlite`. `idx combine` само слива.
+
+Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`. Webref се тегли с `git` (shallow sparse clone).
 
 ## Нощен refresh
 
@@ -29,7 +31,7 @@ uv run idx assemble --due '["nist_csrc"]' --previous-dir previous --release-tag 
 - `assemble` избира по един shard на източник: новия, ако е минал guards (`max_row_drop`, `golden` заявките от yaml-а), иначе този от предишния release.
 - Ако нищо не е построено наново, release не излиза; `manifest/sources.json` пак се commit-ва с новото `checked_at` (това е и keepalive-ът).
 - `outcome` на източник: `built`, `unchanged` (същият SHA-256 на суровите данни), `not_due`, `failed`, `rejected`. При `failed` / `rejected` се отваря issue с label `source:<id>`; затваря се, когато източникът се оправи.
-- Release `index-YYYYMMDD` (втори run в същия ден: `index-YYYYMMDD.2`), пазят се последните 14.
+- Release `index-YYYYMMDD` (втори run в същия ден: `index-YYYYMMDD.2`), пазят се последните 14. В него: `index.sqlite.zst`, `shard-*.sqlite.zst`, `manifest.json` и `NOTICE.md` (атрибуция и лиценз на всеки източник; `idx assemble --notice`).
 
 ## За консуматора (enrichment)
 
@@ -56,7 +58,7 @@ with load_providers(index) as registry:        # IndexVersionError при дру
 - `src/terminology_indexes/contract.py` — `Provider`, `Candidate`, `LinkRecord`, `CheckResult`.
 - `src/terminology_indexes/providers/` — `load_providers()`, `Registry.search_all()` / `check()`, `IndexProvider`; live provider-ите се записват в `LIVE_PROVIDERS`.
 - `src/terminology_indexes/release.py` — `download_release()`: сваля и проверява `index.sqlite` от release.
-- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`).
+- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи) и `text.py` (етикети от заглавие, dedupe по `label_key`).
 - `src/terminology_indexes/refresh.py` — `plan`, `refresh_source`, `assemble`: стъпките на нощния refresh.
 - `manifest/sources.json` — последният manifest; пише го само `refresh.yml`.
 - `.github/workflows/refresh.yml` — нощен cron + `workflow_dispatch`: plan → fetch (matrix) → combine → publish → commit → issues.

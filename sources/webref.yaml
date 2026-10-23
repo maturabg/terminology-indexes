@@ -3,7 +3,7 @@ name: "WHATWG + W3C дефиниции (Webref)"
 site_no: "9"
 home: "https://github.com/w3c/webref"
 mode: index
-status: planned
+status: active
 iteration: 4
 fetch:
   method: git_sparse
@@ -12,7 +12,7 @@ fetch:
 refresh: "P1D"
 langs: [en]
 kind_default: spec_section
-stable_id: dfn_href
+stable_id: spec_anchor  # <shortname>#<dfn id>
 check: "index_lookup"
 license:
   class: cc_by
@@ -22,5 +22,8 @@ snippet_policy: none
 attribution: "WHATWG (CC BY 4.0); W3C спецификации — W3C Document License"
 rate_limit: { rps: null, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "shadow root", expect: "dom#concept-shadow-root" }
+  - { query: "Access-Control-Allow-Origin", expect: "fetch#http-access-control-allow-origin" }
 contact: null
-notes: "Branch curated, ed/dfns/*.json. Лицензът зависи от спецификацията (WHATWG CC BY 4.0, W3C Document License) — пазим license в extra на записа. dfns нямат текст на дефиницията, затова snippet: none."
+notes: "Branch curated, shallow sparse clone на ed/dfns/ и ed/index.json. Само спецификации на WHATWG и W3C (без discontinued); само public, неинформативни dfns без `for`, от типовете в ingest/webref.py. Лицензът зависи от спецификацията (WHATWG CC BY 4.0, W3C Document License) — пазим license в extra на записа. dfns нямат текст на дефиницията, затова snippet: none. Hash-ът е на dfns и на използваните полета от index.json (датите на crawl-а се менят всеки ден)."

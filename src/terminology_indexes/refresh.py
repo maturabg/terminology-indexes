@@ -193,6 +193,31 @@ def assemble(
     return {"changed": changed, "manifest": result, "sources": report}
 
 
+def notice(registry: dict[str, Source], manifest: dict) -> str:
+    """``NOTICE.md`` of a release: attribution and license of every source in the index."""
+    lines = [
+        f"# Notices for {manifest.get('release_tag') or 'index.sqlite'}",
+        "",
+        "The index holds titles, URLs and, where the license allows, short snippets of these sources.",
+    ]
+    for sid in sorted(manifest.get("sources", {})):
+        source = registry.get(sid)
+        if source is None:
+            continue
+        license_ = source.raw.get("license") or {}
+        lines += [
+            "",
+            f"## {source.name} (`{sid}`)",
+            "",
+            f"- Attribution: {source.attribution}",
+            f"- License: {source.license_class}, {license_.get('url') or '—'}",
+            f"- Snapshot: {manifest['sources'][sid].get('snapshot_version', '—')}",
+        ]
+        if text := (source.raw.get("notice") or "").strip():
+            lines += ["", text]
+    return "\n".join(lines) + "\n"
+
+
 def summary(result: dict) -> str:
     """Markdown for the job summary."""
     m = result["manifest"]

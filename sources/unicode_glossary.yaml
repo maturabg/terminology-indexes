@@ -3,7 +3,7 @@ name: "Unicode Glossary"
 site_no: "11"
 home: "https://www.unicode.org/glossary/"
 mode: index
-status: planned
+status: active
 iteration: 4
 fetch:
   method: html_page
@@ -22,5 +22,8 @@ snippet_policy: none
 attribution: "Unicode, Inc."
 rate_limit: { rps: 0.5, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "byte order mark", expect: "byte_order_mark" }
+  - { query: "code point", expect: "code_point" }
 contact: null
-notes: "Една HTML страница; само реални id атрибути. Линковете са изрично разрешени, текстът — не."
+notes: "Една HTML страница; само реални id атрибути (<p id> със self-link към същия id). Линковете са изрично разрешени, текстът — не: snippet: none, от дефиницията се чете само „Acronym for …“ за alt етикет."

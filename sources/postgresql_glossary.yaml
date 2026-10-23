@@ -3,7 +3,7 @@ name: "PostgreSQL Glossary"
 site_no: "26"
 home: "https://www.postgresql.org/docs/current/glossary.html"
 mode: index
-status: planned
+status: active
 iteration: 4
 fetch:
   method: html_page
@@ -22,5 +22,8 @@ snippet_policy: short
 attribution: "PostgreSQL Global Development Group, PostgreSQL License"
 rate_limit: { rps: 0.5, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "ACID", expect: "GLOSSARY-ACID" }
+  - { query: "I/O", expect: "GLOSSARY-IO" }
 contact: null
-notes: "Anchors GLOSSARY-*. Fetch от /docs/18/, публичният URL е към /current/ (виж docs/decisions.md)."
+notes: "Anchors GLOSSARY-* (само <dt> с id). `<dt>` без id, които казват „See X“, стават redirect етикет на X. Fetch от /docs/18/, публичният URL е към /current/ (виж docs/decisions.md)."

@@ -3,7 +3,7 @@ name: "Git Glossary"
 site_no: "24"
 home: "https://git-scm.com/docs/gitglossary"
 mode: index
-status: planned
+status: active
 iteration: 4
 fetch:
   method: http_file
@@ -22,5 +22,8 @@ snippet_policy: none
 attribution: "Git project, GPL-2.0-only"
 rate_limit: { rps: null, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "commit", expect: "def_commit" }
+  - { query: "committish", expect: "def_commit-ish" }
 contact: null
-notes: "Anchors def_…. GPL текст в release asset изисква отделен GPL-съвместим файл — засега без snippet."
+notes: "Anchors def_…. `a, b, c` и `x (also y)` дават alt етикети. `Obsolete for: <<def_x>>` → status redirect + replaced_by, а името става redirect етикет на целта. GPL текст в release asset изисква отделен GPL-съвместим файл — засега без snippet."

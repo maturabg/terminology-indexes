@@ -15,7 +15,7 @@ from terminology_indexes.build import BuildError, combine, fetch_and_build, mani
 from terminology_indexes.contract import LinkRecord
 from terminology_indexes.model import IndexVersionError, load_registry
 from terminology_indexes.providers import load_providers
-from terminology_indexes.refresh import FAILED, assemble, plan, read_json, refresh_source, summary, write_json
+from terminology_indexes.refresh import FAILED, assemble, notice, plan, read_json, refresh_source, summary, write_json
 from terminology_indexes.release import REPO, ReleaseError, download_release
 
 
@@ -109,8 +109,9 @@ def cmd_shard(args: argparse.Namespace) -> int:
 
 
 def cmd_assemble(args: argparse.Namespace) -> int:
+    registry = load_registry(args.sources_dir)
     result = assemble(
-        load_registry(args.sources_dir),
+        registry,
         due=json.loads(args.due),
         new_dir=args.new_dir,
         previous_dir=args.previous_dir,
@@ -124,6 +125,8 @@ def cmd_assemble(args: argparse.Namespace) -> int:
         write_json(args.report, {"changed": result["changed"], "sources": result["sources"]})
     if args.summary:
         args.summary.write_text(summary(result), encoding="utf-8")
+    if args.notice and result["changed"]:
+        args.notice.write_text(notice(registry, result["manifest"]), encoding="utf-8")
     print(f"changed: {str(result['changed']).lower()}", file=sys.stderr)
     return 0
 
@@ -202,6 +205,7 @@ def parser() -> argparse.ArgumentParser:
     a.add_argument("--release-tag", required=True)
     a.add_argument("--report", type=Path, help="JSON: changed + outcome per source")
     a.add_argument("--summary", type=Path, help="Markdown for the job summary")
+    a.add_argument("--notice", type=Path, help="NOTICE.md for the release (written only if changed)")
     refresh_args(a)
     a.set_defaults(func=cmd_assemble)
     return p

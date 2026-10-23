@@ -1,0 +1,49 @@
+{
+ "type": "crawl",
+ "title": "Fixture: the fields of ed/index.json that the parser reads",
+ "date": "2026-10-22",
+ "results": [
+  {
+   "shortname": "dom",
+   "title": "DOM Standard",
+   "organization": "WHATWG",
+   "standing": "good",
+   "url": "https://dom.spec.whatwg.org/"
+  },
+  {
+   "shortname": "fetch",
+   "title": "Fetch Standard",
+   "organization": "WHATWG",
+   "standing": "good",
+   "url": "https://fetch.spec.whatwg.org/"
+  },
+  {
+   "shortname": "css-color-4",
+   "title": "CSS Color Module Level 4",
+   "organization": "W3C",
+   "standing": "good",
+   "url": "https://drafts.csswg.org/css-color-4/"
+  },
+  {
+   "shortname": "ecmascript",
+   "title": "ECMAScript Language Specification",
+   "organization": "Ecma International",
+   "standing": "good",
+   "url": "https://tc39.es/ecma262/"
+  },
+  {
+   "shortname": "old-spec",
+   "title": "Old Spec",
+   "organization": "W3C",
+   "standing": "discontinued",
+   "url": "https://example.org/old/"
+  },
+  {
+   "shortname": "no-dfns",
+   "title": "No dfns",
+   "organization": "W3C",
+   "standing": "good",
+   "url": "https://example.org/none/"
+  }
+ ]
+}

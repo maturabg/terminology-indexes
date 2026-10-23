@@ -1,0 +1,144 @@
+{
+ "spec": {
+  "title": "DOM Standard",
+  "url": "https://dom.spec.whatwg.org/"
+ },
+ "dfns": [
+  {
+   "id": "concept-shadow-root",
+   "href": "https://dom.spec.whatwg.org/#concept-shadow-root",
+   "linkingText": [
+    "shadow root",
+    "shadow roots"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-node-tree",
+   "href": "https://dom.spec.whatwg.org/#concept-node-tree",
+   "linkingText": [
+    "node tree"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "interface-node",
+   "href": "https://dom.spec.whatwg.org/#interface-node",
+   "linkingText": [
+    "Node"
+   ],
+   "localLinkingText": [],
+   "type": "interface",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-private",
+   "href": "https://dom.spec.whatwg.org/#concept-private",
+   "linkingText": [
+    "private thing"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "private",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-informative",
+   "href": "https://dom.spec.whatwg.org/#concept-informative",
+   "linkingText": [
+    "informative thing"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": true,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "dom-node-nodetype",
+   "href": "https://dom.spec.whatwg.org/#dom-node-nodetype",
+   "linkingText": [
+    "nodeType"
+   ],
+   "localLinkingText": [],
+   "type": "attribute",
+   "for": [
+    "Node"
+   ],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "dictdef-eventinit",
+   "href": "https://dom.spec.whatwg.org/#dictdef-eventinit",
+   "linkingText": [
+    "EventInit"
+   ],
+   "localLinkingText": [],
+   "type": "dictionary",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-empty",
+   "href": "https://dom.spec.whatwg.org/#concept-empty",
+   "linkingText": [],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  },
+  {
+   "id": "concept-shadow-root",
+   "href": "https://dom.spec.whatwg.org/#concept-shadow-root",
+   "linkingText": [
+    "shadow root"
+   ],
+   "localLinkingText": [],
+   "type": "dfn",
+   "for": [],
+   "access": "public",
+   "informative": false,
+   "heading": {},
+   "definedIn": "prose",
+   "links": []
+  }
+ ]
+}

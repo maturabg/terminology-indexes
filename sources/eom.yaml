@@ -3,10 +3,10 @@ name: "Encyclopedia of Mathematics"
 site_no: "15"
 home: "https://encyclopediaofmath.org/"
 mode: index
-status: planned
+status: paused
 iteration: 6
 fetch:
-  method: mediawiki_titles
+  method: mediawiki_allpages
   url: "https://encyclopediaofmath.org/api.php"
   checksum_url: null
 live:
@@ -27,4 +27,4 @@ attribution: "Encyclopedia of Mathematics (Springer / EMS)"
 rate_limit: { rps: 0.5, daily: null }
 guards: { max_row_drop: 0.2 }
 contact: null
-notes: "Само заглавия през list=allpages. Смесени права (оригиналите © Springer) — без snippet. На 2026-10-16 api.php връщаше 502 — да се провери отново."
+notes: "Само заглавия през list=allpages (без redirects). Смесени права (оригиналите © Springer) — без snippet. paused: целият сайт връща 502 (2026-10-16, 2026-10-23); адаптерът е готов — при възстановяване status: active и golden."

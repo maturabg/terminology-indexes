@@ -49,13 +49,19 @@ def _registry(index: Path):
 def cmd_query(args: argparse.Namespace) -> int:
     with _registry(args.index) as registry:
         hits = registry.search_all(
-            args.text, lang=args.lang, sources=args.source, limit=args.limit, per_source=args.per_source
+            args.text,
+            translation=args.translation,
+            lang=args.lang,
+            sources=args.source,
+            limit=args.limit,
+            per_source=args.per_source,
         )
     if args.json:
         print(json.dumps([asdict(h) for h in hits], ensure_ascii=False, indent=2))
     else:
         for h in hits:
-            print(f"{h.match:5}  {h.source}  {h.title}  {h.url}")
+            both = f"  [+ {h.also_matched}]" if h.also_matched else ""
+            print(f"{h.match:5}  {h.source}  {h.title}{both}  {h.url}")
     return 0 if hits else 1
 
 
@@ -156,6 +162,7 @@ def parser() -> argparse.ArgumentParser:
     q.add_argument("text")
     q.add_argument("--index", type=Path, default=Path("index.sqlite"))
     q.add_argument("--lang")
+    q.add_argument("--translation", help="BG translation: bonus for entries both sides find")
     q.add_argument("--source", action="append", help="limit to source id (repeatable)")
     q.add_argument("--limit", type=int, default=10)
     q.add_argument("--per-source", type=int, default=3)

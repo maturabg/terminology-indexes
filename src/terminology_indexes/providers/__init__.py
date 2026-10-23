@@ -4,6 +4,7 @@ import logging
 import os
 import sqlite3
 from collections.abc import Iterable, Mapping
+from dataclasses import replace
 from importlib import import_module
 from pathlib import Path
 
@@ -11,6 +12,9 @@ from terminology_indexes.contract import MATCH_RANK, Candidate, CheckResult, Lin
 from terminology_indexes.providers.index import IndexProvider, open_index
 
 log = logging.getLogger(__name__)
+
+# With a translation, each side looks this deep for an entry both reach.
+BILINGUAL_POOL = 20
 
 # Live providers (iteration 7): source id -> "module:Class". A class may set
 # ``secret_env``; without that variable in ``env`` it is not registered.
@@ -46,7 +50,9 @@ class Registry:
         self,
         query: str,
         *,
+        translation: str | None = None,
         lang: str | None = None,
+        translation_lang: str = "bg",
         sources: Iterable[str] | None = None,
         limit: int = 10,
         per_source: int = 3,
@@ -55,16 +61,30 @@ class Registry:
 
         Within one match type, sources interleave by their own rank, so a large
         source cannot push the others out.
+
+        ``translation`` (the BG side of the dictionary row) is the bilingual bonus:
+        an entry that both ``query`` and ``translation`` find moves up one match type
+        and ahead of its ties, and carries the translation's label in ``also_matched``.
+        An exact match on both sides comes first of all.
         """
-        ranked: list[tuple[int, int, Candidate]] = []
+        ranked: list[tuple[int, bool, int, Candidate]] = []
         for provider in self._select(sources):
             try:
-                found = provider.search(query, lang=lang, limit=per_source)
+                found = provider.search(query, lang=lang, limit=BILINGUAL_POOL if translation else per_source)
+                both = {}
+                if translation:
+                    for c in provider.search(translation, lang=translation_lang, limit=BILINGUAL_POOL):
+                        both.setdefault(c.external_id, c.matched_label)
             except Exception:
                 log.warning("search failed in %s", provider.id, exc_info=True)
                 continue
-            ranked += [(MATCH_RANK[c.match], pos, c) for pos, c in enumerate(found)]
-        ranked.sort(key=lambda r: r[:2])
+            scored = sorted(
+                (MATCH_RANK[c.match] - (c.external_id in both), c.external_id not in both, pos, c)
+                for pos, c in enumerate(found)
+            )
+            for pos, (rank, single, _, c) in enumerate(scored[:per_source]):
+                ranked.append((rank, single, pos, c if single else replace(c, also_matched=both[c.external_id])))
+        ranked.sort(key=lambda r: r[:3])
         return [c for *_, c in ranked[:limit]]
 
     def check(self, link: LinkRecord) -> CheckResult:

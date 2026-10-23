@@ -53,8 +53,12 @@ HTML_PAGES = {
     sid: FIXTURES / f"{sid}.html" for sid in ("postgresql_glossary", "unicode_glossary", "google_ml", "nist_dads")
 }
 # Git sources and OWASP GenAI: a directory laid out like the fetched one
-DIRECTORIES = {sid: FIXTURES / sid for sid in ("mdn", "cncf_glossary", "owasp_cheatsheets", "owasp_genai")}
+DIRECTORIES = {
+    sid: FIXTURES / sid
+    for sid in ("mdn", "cncf_glossary", "owasp_cheatsheets", "owasp_genai", "wiktionary", "eom", "eurovoc")
+}
 RFC_INDEX = FIXTURES / "rfc_editor.rfc-index.xml"
+IATE_ZIP = FIXTURES / "iate.zip"
 
 
 def load_source(source_id: str) -> Source:
@@ -78,6 +82,8 @@ def fixture_snapshot(adapter):
             return adapter.snapshot(GIT_ADOC, sha256_file(GIT_ADOC))
         case "rfc_editor":
             return adapter.snapshot(RFC_INDEX, sha256_file(RFC_INDEX))
+        case "iate":
+            return adapter.snapshot(IATE_ZIP)
         case sid if sid in HTML_PAGES:
             return adapter.snapshot(HTML_PAGES[sid])
         case sid if sid in DIRECTORIES:

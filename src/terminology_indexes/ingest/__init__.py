@@ -8,8 +8,11 @@ from terminology_indexes.model import Source
 ADAPTERS = {
     "cncf_glossary": "terminology_indexes.ingest.cncf_glossary:CncfGlossary",
     "ecma262": "terminology_indexes.ingest.ecma262:Ecma262",
+    "eom": "terminology_indexes.ingest.eom:Eom",
+    "eurovoc": "terminology_indexes.ingest.eurovoc:Eurovoc",
     "git_glossary": "terminology_indexes.ingest.git_glossary:GitGlossary",
     "google_ml": "terminology_indexes.ingest.google_ml:GoogleMl",
+    "iate": "terminology_indexes.ingest.iate:Iate",
     "mdn": "terminology_indexes.ingest.mdn:Mdn",
     "mitre_cwe": "terminology_indexes.ingest.mitre_cwe:MitreCwe",
     "nist_csrc": "terminology_indexes.ingest.nist_csrc:NistCsrc",
@@ -21,6 +24,7 @@ ADAPTERS = {
     "rfc_editor": "terminology_indexes.ingest.rfc_editor:RfcEditor",
     "unicode_glossary": "terminology_indexes.ingest.unicode_glossary:UnicodeGlossary",
     "webref": "terminology_indexes.ingest.webref:Webref",
+    "wiktionary": "terminology_indexes.ingest.wiktionary:Wiktionary",
 }
 
 

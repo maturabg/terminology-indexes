@@ -3,12 +3,20 @@ name: "Wiktionary EN/BG"
 site_no: "5"
 home: "https://en.wiktionary.org/"
 mode: index
-status: planned
+status: active
 iteration: 6
 fetch:
-  method: mediawiki_titles
-  url: "https://dumps.wikimedia.org/{wiki}/latest/{wiki}-latest-all-titles-in-ns0.gz"
-  checksum_url: null
+  method: mediawiki_category
+  wikis:
+    - lang: en
+      api: "https://en.wiktionary.org/w/api.php"
+      category: "Category:English lemmas"
+      url: "https://en.wiktionary.org/wiki/"
+      anchor: English
+    - lang: bg
+      api: "https://bg.wiktionary.org/w/api.php"
+      category: "Категория:Думи в българския език"
+      url: "https://bg.wiktionary.org/wiki/"
 live:
   api: "https://{lang}.wiktionary.org/w/api.php"
   auth: none
@@ -24,7 +32,10 @@ license:
   checked_at: 2026-10-14
 snippet_policy: none
 attribution: "Wiktionary contributors, CC BY-SA 4.0"
-rate_limit: { rps: 1, daily: null }
+rate_limit: { rps: 2, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "hash table", expect: "en:hash table" }
+  - { query: "компютър", expect: "bg:компютър" }
 contact: null
-notes: "Индекс + live: индексът държи само заглавията (enwiktionary и bgwiktionary); check по pageid проверява live, че има езикова секция English/Български."
+notes: "Индекс + live: индексът държи само заглавията на лемите — членовете на Category:English lemmas (~885 000) и Категория:Думи в българския език (~22 000), през list=categorymembers. Dump-ът all-titles-in-ns0 е 9 млн. заглавия на всички езици и словоформи — не става. check по pageid проверява live, че има езикова секция English/Български."

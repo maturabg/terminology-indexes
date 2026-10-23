@@ -22,6 +22,8 @@ class Candidate:
     match: str  # exact | alias | fts
     snippet: str | None
     snapshot_version: str  # release tag / shard version, or live:<date>
+    # ``search_all(translation=...)``: the translation's label on the same entry
+    also_matched: str | None = None
 
 
 @dataclass(frozen=True)

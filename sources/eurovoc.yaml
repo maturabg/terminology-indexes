@@ -3,10 +3,11 @@ name: "EuroVoc"
 site_no: "22"
 home: "https://op.europa.eu/en/web/eu-vocabularies"
 mode: index
-status: planned
+status: active
 iteration: 6
 fetch:
-  method: http_zip
+  method: cellar_sparql
+  sparql: "https://publications.europa.eu/webapi/rdf/sparql"
   url: "https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/eurovoc"
   checksum_url: null
 refresh: "P30D"
@@ -22,5 +23,8 @@ snippet_policy: short
 attribution: "EuroVoc, © Европейски съюз"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "European Commission", expect: "http://eurovoc.europa.eu/4038" }
+  - { query: "Европейска комисия", expect: "http://eurovoc.europa.eu/4038" }
 contact: null
-notes: "SKOS download, pref/alt етикети на EN и BG. Лицензът да се провери за конкретния release при първия fetch. check: SPARQL ASK към https://publications.europa.eu/webapi/rdf/sparql."
+notes: "SKOS Core на последния release (Cellar SPARQL намира release-а и manifestation SKOS_CORE), pref/alt етикети на EN и BG. Snippet = EN skos:definition (ЕС редакционен текст). Release-ът в Cellar няма собствен лиценз — важи общото уведомление на Publications Office (повторна употреба с атрибуция). check: SPARQL ASK към https://publications.europa.eu/webapi/rdf/sparql."

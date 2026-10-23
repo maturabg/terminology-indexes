@@ -8,6 +8,7 @@
 uv sync
 uv run idx build --source python_glossary --source mitre_cwe   # raw/ → shards/shard-<id>.sqlite → index.sqlite
 uv run idx query "decorator"                # search_all: exact > alias > FTS, лимит по източник
+uv run idx query firewall --lang en --translation "защитна стена"   # двуезичен бонус
 uv run idx check python_glossary decorator https://docs.python.org/3/glossary.html#term-decorator
 uv run idx fetch --dest dl                  # последният release → dl/index.sqlite (проверен SHA-256)
 uv run idx manifest
@@ -16,7 +17,7 @@ uv run pytest
 
 `idx build` тегли и парсва посочените източници, после слива всички `shards/shard-*.sqlite` в `index.sqlite`. `idx combine` само слива.
 
-Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`, `mdn`, `cncf_glossary`, `owasp_cheatsheets`, `owasp_genai`, `rfc_editor`, `nist_dads`. Webref, MDN, CNCF и OWASP Cheat Sheets се теглят с `git` (shallow sparse clone).
+Активни източници: `python_glossary`, `nist_csrc`, `mitre_cwe`, `ecma262`, `webref`, `git_glossary`, `postgresql_glossary`, `unicode_glossary`, `google_ml`, `mdn`, `cncf_glossary`, `owasp_cheatsheets`, `owasp_genai`, `rfc_editor`, `nist_dads`, `iate`, `eurovoc`, `wiktionary`. Webref, MDN, CNCF и OWASP Cheat Sheets се теглят с `git` (shallow sparse clone). `eom` е `paused` (сайтът връща 502).
 
 ## Нощен refresh
 
@@ -36,7 +37,7 @@ uv run idx assemble --due '["nist_csrc"]' --previous-dir previous --release-tag 
 ## За консуматора (enrichment)
 
 ```sh
-uv add "terminology-indexes @ git+https://github.com/maturabg/terminology-indexes@lib-v0.1.0"
+uv add "terminology-indexes @ git+https://github.com/maturabg/terminology-indexes@lib-v0.2.0"
 ```
 
 ```python
@@ -45,6 +46,8 @@ from terminology_indexes import LinkRecord, download_release, load_providers
 index = download_release("dl")                 # latest release; token=... ако repo-то е частно
 with load_providers(index) as registry:        # IndexVersionError при друг schema_version
     hits = registry.search_all("decorator", lang="en", sources=None, limit=10, per_source=3)
+    # с BG превода: запис, намерен и от двете страни, се вдига с едно ниво; also_matched = BG етикетът
+    hits = registry.search_all("firewall", translation="защитна стена", lang="en")
     result = registry.check(LinkRecord(hits[0].source, hits[0].external_id, hits[0].url))
 ```
 
@@ -58,7 +61,7 @@ with load_providers(index) as registry:        # IndexVersionError при дру
 - `src/terminology_indexes/contract.py` — `Provider`, `Candidate`, `LinkRecord`, `CheckResult`.
 - `src/terminology_indexes/providers/` — `load_providers()`, `Registry.search_all()` / `check()`, `IndexProvider`; live provider-ите се записват в `LIVE_PROVIDERS`.
 - `src/terminology_indexes/release.py` — `download_release()`: сваля и проверява `index.sqlite` от release.
-- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи), `git_sparse.py` (shallow sparse clone, хеш на прочетените файлове), `markdown.py` (frontmatter, заглавия и абзаци извън code fences) и `text.py` (етикети от заглавие, dedupe по `label_key`).
+- `src/terminology_indexes/ingest/` — по един модул на източник: `fetch()` (мрежа) и `parse()` (само локално, тества се с fixture от `tests/fixtures/`). Общи: `html_page.py` (една HTML страница: robots.txt, теглене, хеш на извлечените записи), `git_sparse.py` (shallow sparse clone, хеш на прочетените файлове), `markdown.py` (frontmatter, заглавия и абзаци извън code fences), `mediawiki.py` (MediaWiki API: страниране, retry, URL на страница) и `text.py` (етикети от заглавие, dedupe по `label_key`).
 - `src/terminology_indexes/refresh.py` — `plan`, `refresh_source`, `assemble`: стъпките на нощния refresh.
 - `manifest/sources.json` — последният manifest; пише го само `refresh.yml`.
 - `.github/workflows/refresh.yml` — нощен cron + `workflow_dispatch`: plan → fetch (matrix) → combine → publish → commit → issues.

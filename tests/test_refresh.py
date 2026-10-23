@@ -196,8 +196,10 @@ def test_refresh_all_sources(tmp_path: Path) -> None:
         [
             "cncf_glossary",
             "ecma262",
+            "eurovoc",
             "git_glossary",
             "google_ml",
+            "iate",
             "mdn",
             "mitre_cwe",
             "nist_csrc",
@@ -209,6 +211,7 @@ def test_refresh_all_sources(tmp_path: Path) -> None:
             "rfc_editor",
             "unicode_glossary",
             "webref",
+            "wiktionary",
         ],
         "built",
     )

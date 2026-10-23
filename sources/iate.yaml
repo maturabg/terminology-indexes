@@ -3,11 +3,11 @@ name: "IATE"
 site_no: "2"
 home: "https://iate.europa.eu/"
 mode: index
-status: planned
+status: active
 iteration: 6
 fetch:
   method: http_zip
-  url: "https://iate.europa.eu/download-iate"
+  url: "https://iate.europa.eu/em-api/artifacts/full-tbx"
   checksum_url: null
 refresh: "P30D"
 langs: [en, bg]
@@ -18,9 +18,12 @@ license:
   class: open
   url: "https://iate.europa.eu/legal-notice"
   checked_at: 2026-10-14
-snippet_policy: short
-attribution: "IATE, © Европейски съюз"
+snippet_policy: none
+attribution: "Download IATE, European Union, 2019"
 rate_limit: { rps: 1, daily: null }
 guards: { max_row_drop: 0.2 }
+golden:
+  - { query: "local area network", expect: "794344" }
+  - { query: "защитна стена", expect: "176235" }
 contact: null
-notes: "TBX/CSV export, поточен parse, филтър EN+BG. Live API по ID като резервен check. Бележките на отделни записи може да сочат чужд първоизточник — snippet се пропуска при такава бележка. Да се измери размерът на shard-а."
+notes: "Публичният пълен TBX export (`full-tbx` пренасочва към S3 `IATE_download.zip`, export от 2019-02-26) — анонимно друг няма; актуалният export е async job само за влезли потребители. Поточен parse, филтър EN+BG, без термини с reliability 1. Export-ът няма дефиниции — без snippet. Live API по ID като резервен check (итерация 7)."

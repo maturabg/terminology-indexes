@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-10-23T20:55:46+00:00",
-  "release_tag": "index-20261023.4",
-  "index_sha256": "4f6cd9e779a7c3af134b2ec91a9d5f9b425b06035ca66b4e19a7bb5cce27acd0",
+  "built_at": "2026-10-23T23:32:09+00:00",
+  "release_tag": "index-20261023.5",
+  "index_sha256": "f8111a467c0fdf2b42cb7d2908995b4c9b3a39ddad58e6354229062fce4ce2a0",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -30,7 +30,7 @@
       "row_count": 47294,
       "license": "restricted",
       "checked_at": "2026-10-23T20:55:19+00:00",
-      "outcome": "built"
+      "outcome": "not_due"
     },
     "eurovoc": {
       "snapshot_version": "4.24+4e10dbc130cd",
@@ -77,14 +77,23 @@
       "checked_at": "2026-10-23T09:37:27+00:00",
       "outcome": "not_due"
     },
+    "mitre_cwe": {
+      "snapshot_version": "4.20+1f5a78bd62e0",
+      "fetched_at": "2026-10-23T23:31:52+00:00",
+      "raw_sha256": "1f5a78bd62e00f86436b4fe32d5034a57e8f0da88e4063b2072b664ae510912e",
+      "row_count": 1450,
+      "license": "open",
+      "checked_at": "2026-10-23T23:31:50+00:00",
+      "outcome": "built"
+    },
     "nist_csrc": {
       "snapshot_version": "2026-10-21+9d303c5fc1c8",
       "fetched_at": "2026-10-22T21:15:05+00:00",
       "raw_sha256": "9d303c5fc1c8038909e582c2f4daefcb5826d83d910a4473cac7995093395a18",
       "row_count": 9140,
       "license": "public_domain",
-      "checked_at": "2026-10-23T09:37:26+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-10-23T23:31:49+00:00",
+      "outcome": "unchanged"
     },
     "nist_dads": {
       "snapshot_version": "9c8fb3b03fe8",
@@ -137,8 +146,8 @@
       "raw_sha256": "918a3b2e7b83c9e24c71931f487d90942d9f343e0ac2b9bcf29b6ecb79597ad1",
       "row_count": 9848,
       "license": "open",
-      "checked_at": "2026-10-23T09:37:26+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-10-23T23:31:49+00:00",
+      "outcome": "unchanged"
     },
     "unicode_glossary": {
       "snapshot_version": "42a7c5ee230a",
@@ -156,7 +165,7 @@
       "row_count": 8282,
       "license": "cc_by",
       "checked_at": "2026-10-23T20:55:18+00:00",
-      "outcome": "built"
+      "outcome": "not_due"
     },
     "wiktionary": {
       "snapshot_version": "dfb35d6da4fa",

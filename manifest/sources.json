@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-10-23T23:32:09+00:00",
-  "release_tag": "index-20261023.5",
-  "index_sha256": "f8111a467c0fdf2b42cb7d2908995b4c9b3a39ddad58e6354229062fce4ce2a0",
+  "built_at": "2026-10-27T00:06:17+00:00",
+  "release_tag": "index-20261027",
+  "index_sha256": "8605e8f6aba6f9118381b0abb63f797a8bb518995b2a999e9f15d37b998a34a5",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -92,7 +92,7 @@
       "raw_sha256": "9d303c5fc1c8038909e582c2f4daefcb5826d83d910a4473cac7995093395a18",
       "row_count": 9140,
       "license": "public_domain",
-      "checked_at": "2026-10-25T22:49:07+00:00",
+      "checked_at": "2026-10-27T00:05:47+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -141,13 +141,13 @@
       "outcome": "not_due"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10065+918a3b2e7b83",
-      "fetched_at": "2026-10-23T09:37:27+00:00",
-      "raw_sha256": "918a3b2e7b83c9e24c71931f487d90942d9f343e0ac2b9bcf29b6ecb79597ad1",
-      "row_count": 9848,
+      "snapshot_version": "RFC10067+21a3e7b483d9",
+      "fetched_at": "2026-10-27T00:05:52+00:00",
+      "raw_sha256": "21a3e7b483d90a83e24d39fc222300598579f6e1128487058c28a0f2a40ba2af",
+      "row_count": 9850,
       "license": "open",
-      "checked_at": "2026-10-25T22:49:07+00:00",
-      "outcome": "unchanged"
+      "checked_at": "2026-10-27T00:05:50+00:00",
+      "outcome": "built"
     },
     "unicode_glossary": {
       "snapshot_version": "42a7c5ee230a",
@@ -159,13 +159,13 @@
       "outcome": "not_due"
     },
     "webref": {
-      "snapshot_version": "2026-10-23+c92ff41836d2",
-      "fetched_at": "2026-10-23T20:55:23+00:00",
-      "raw_sha256": "6ff2b6caf6fe5153ef0534b2b7a03ce92d5d4f7614fb8bc6ccfc856f5520f3f5",
+      "snapshot_version": "2026-10-26+6ac6259c96b1",
+      "fetched_at": "2026-10-27T00:05:54+00:00",
+      "raw_sha256": "5d142e43d846b79ba456b13689b6139b454dcc097c42c66148e53f7154bce223",
       "row_count": 8282,
       "license": "cc_by",
-      "checked_at": "2026-10-25T22:49:05+00:00",
-      "outcome": "unchanged"
+      "checked_at": "2026-10-27T00:05:49+00:00",
+      "outcome": "built"
     },
     "wiktionary": {
       "snapshot_version": "dfb35d6da4fa",

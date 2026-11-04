@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-11-03T02:39:50+00:00",
-  "release_tag": "index-20261103",
-  "index_sha256": "518fe1cd4527a1058a547320bc7a9736bc4f3e4570698d05f60ad00c9e36993f",
+  "built_at": "2026-11-04T00:55:22+00:00",
+  "release_tag": "index-20261104",
+  "index_sha256": "04a9d224d206a54f5c8db459cc1540981f1013e7a271e78465e7d16286c21bee",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -87,13 +87,13 @@
       "outcome": "failed"
     },
     "nist_csrc": {
-      "snapshot_version": "2026-10-27+9317019e5452",
-      "fetched_at": "2026-10-28T00:02:11+00:00",
-      "raw_sha256": "9317019e5452a3a3754a5baabd4a0ddeb74cfc72335f1f5ff4bd2e0b061aca14",
-      "row_count": 9145,
+      "snapshot_version": "2026-11-03+bc2a9dc2eb32",
+      "fetched_at": "2026-11-04T00:54:59+00:00",
+      "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
+      "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-03T02:39:21+00:00",
-      "outcome": "unchanged"
+      "checked_at": "2026-11-04T00:54:59+00:00",
+      "outcome": "built"
     },
     "nist_dads": {
       "snapshot_version": "9c8fb3b03fe8",
@@ -141,12 +141,12 @@
       "outcome": "not_due"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10080+4b11ad8c0088",
-      "fetched_at": "2026-11-03T02:39:24+00:00",
-      "raw_sha256": "4b11ad8c0088a81c3ddb9b37de3915a196377e36e3eca873f9adac49e2142808",
+      "snapshot_version": "RFC10080+dd963eda4880",
+      "fetched_at": "2026-11-04T00:54:58+00:00",
+      "raw_sha256": "dd963eda48804cfe9f2b225016c01e8ed9a7b60699d47f4c24fe0b8f4f3fe04c",
       "row_count": 9854,
       "license": "open",
-      "checked_at": "2026-11-03T02:39:22+00:00",
+      "checked_at": "2026-11-04T00:54:56+00:00",
       "outcome": "built"
     },
     "unicode_glossary": {
@@ -164,7 +164,7 @@
       "raw_sha256": "5d142e43d846b79ba456b13689b6139b454dcc097c42c66148e53f7154bce223",
       "row_count": 8282,
       "license": "cc_by",
-      "checked_at": "2026-11-03T02:39:25+00:00",
+      "checked_at": "2026-11-04T00:54:58+00:00",
       "outcome": "unchanged"
     },
     "wiktionary": {

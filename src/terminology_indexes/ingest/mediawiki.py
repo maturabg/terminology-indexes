@@ -8,35 +8,21 @@ paging.
 import hashlib
 import json
 import time
-import urllib.error
 import urllib.parse
-import urllib.request
 from collections.abc import Iterable, Iterator
 from pathlib import Path
 
-from terminology_indexes.ingest.base import TIMEOUT, RawSnapshot, make_request
+from terminology_indexes.ingest.base import RawSnapshot, request_json
 
 MAX_LIMIT = 500  # per request, for clients without the apihighlimits right
-RETRIES = 4
 
 
 def get_json(url: str) -> dict:
-    """GET with retries on 429 / 5xx / network errors (Wikimedia hiccups now and then)."""
-    for attempt in range(RETRIES + 1):
-        try:
-            with urllib.request.urlopen(make_request(url), timeout=TIMEOUT) as r:
-                data = json.load(r)
-            if "error" in data:
-                raise RuntimeError(f"{url}: {data['error']}")
-            return data
-        except urllib.error.HTTPError as e:
-            if attempt == RETRIES or not (e.code == 429 or e.code >= 500):
-                raise
-        except urllib.error.URLError, TimeoutError:
-            if attempt == RETRIES:
-                raise
-        time.sleep(5 * 2**attempt)
-    raise AssertionError("unreachable")
+    """GET with retries; an ``error`` member in the answer raises."""
+    data, _ = request_json(url)
+    if "error" in data:
+        raise RuntimeError(f"{url}: {data['error']}")
+    return data
 
 
 def list_pages(api: str, params: dict[str, str], *, rps: float) -> Iterator[dict]:

@@ -6,17 +6,32 @@
 
 import hashlib
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
 
-from terminology_indexes.ingest.base import Adapter, RawSnapshot
+from terminology_indexes.ingest.base import Adapter, RawSnapshot, TemporaryError, retrying
 
 COMMIT_FILE = "commit.json"
 
+# What git prints when the host or the network is down; "repository not found", 403 and the like need a person.
+_NETWORK = re.compile(
+    r"could not resolve host|failed to connect|connection (refused|reset|timed out)|timed out"
+    r"|(returned error:|rpc failed; http) (429|5\d\d)|rpc failed; curl|early eof|remote end hung up",
+    re.IGNORECASE,
+)
+
 
 def git(*args: str, cwd: Path | None = None) -> str:
-    return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+    def run() -> str:
+        try:
+            return subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+        except subprocess.CalledProcessError as e:
+            kind = TemporaryError if _NETWORK.search(e.stderr) else RuntimeError
+            raise kind(f"git {args[0]}: {e.stderr.strip()}") from e
+
+    return retrying(run)
 
 
 def read_commit(root: Path) -> dict[str, str]:

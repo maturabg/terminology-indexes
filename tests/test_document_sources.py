@@ -58,7 +58,7 @@ def test_owasp_genai_fetch(tmp_path: Path, monkeypatch) -> None:
         return Response(json.dumps(items).encode(), 1)
 
     monkeypatch.setattr(owasp_genai, "robots_allowed", lambda url: True)
-    monkeypatch.setattr(owasp_genai.urllib.request, "urlopen", urlopen)
+    monkeypatch.setattr("urllib.request.urlopen", urlopen)
     monkeypatch.setattr(owasp_genai.time, "sleep", lambda s: None)
     adapter = get_adapter(load_source("owasp_genai"))
     snapshot = adapter.fetch(tmp_path)

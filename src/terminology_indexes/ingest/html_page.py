@@ -11,7 +11,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup, Tag
 
-from terminology_indexes.ingest.base import TIMEOUT, USER_AGENT, Adapter, RawSnapshot, download, make_request
+from terminology_indexes.ingest.base import TIMEOUT, USER_AGENT, Adapter, RawSnapshot, download, make_request, retrying
 
 
 def attr(tag: Tag, name: str) -> str:
@@ -28,9 +28,14 @@ def robots_allowed(url: str) -> bool:
     """``robots.txt`` of the host allows our User-Agent to fetch ``url``; no robots.txt allows all."""
     parts = urllib.parse.urlsplit(url)
     robots = urllib.robotparser.RobotFileParser()
+    request = make_request(f"{parts.scheme}://{parts.netloc}/robots.txt")
+
+    def get() -> bytes:
+        with urllib.request.urlopen(request, timeout=TIMEOUT) as r:
+            return r.read()
+
     try:
-        with urllib.request.urlopen(make_request(f"{parts.scheme}://{parts.netloc}/robots.txt"), timeout=TIMEOUT) as r:
-            robots.parse(r.read().decode("utf-8", "replace").splitlines())
+        robots.parse(retrying(get).decode("utf-8", "replace").splitlines())
     except urllib.error.HTTPError as e:
         if e.code in (401, 403):
             return False

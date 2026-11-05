@@ -99,14 +99,19 @@ jobs:
           merge-multiple: true
 
       # Shards of the release the committed manifest describes (latest on the first run).
+      # Without them every source not fetched tonight would drop out of the published index,
+      # so only a first run, with no release to lose, may go on.
       - name: Previous release
         run: |
           mkdir -p previous
           tag=$(jq -r '.release_tag // empty' manifest/sources.json 2>/dev/null || true)
           if gh release download $tag --pattern 'shard-*.sqlite.zst' --dir previous; then
             zstd -dq --rm previous/*.zst
+          elif [ -n "$tag" ]; then
+            echo "::error::cannot download $tag, the release the manifest names; stopping before a partial index goes out"
+            exit 1
           else
-            echo "::warning::no previous release ${tag:-latest}; only new shards go in"
+            echo "::warning::no previous release; only new shards go in"
           fi
           ls -la previous new
 
@@ -171,15 +176,17 @@ jobs:
           git push -q origin "HEAD:$GITHUB_REF_NAME"
 
       # One open issue per broken source (label source:<id>); closed when the source recovers.
+      # alert is false for a short outage: it stays in the job summary and any open issue stays as it is.
       - name: Issues
         if: always() && hashFiles('report.json') != ''
         run: |
-          jq -r '.sources | to_entries[] | [.key, .value.outcome, .value.message] | @tsv' report.json |
-          while IFS=$'\t' read -r id outcome message; do
+          jq -r '.sources | to_entries[] | [.key, .value.outcome, .value.alert, .value.message] | @tsv' report.json |
+          while IFS=$'\t' read -r id outcome alert message; do
             label="source:$id"
             open=$(gh issue list --label "$label" --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
             case "$outcome" in
               failed|rejected)
+                [ "$alert" = "true" ] || continue
                 gh label create "$label" --color d73a4a --description "refresh problems of $id" --force > /dev/null
                 body="$RUN_URL: **$outcome** — $message"
                 if [ -n "$open" ]; then

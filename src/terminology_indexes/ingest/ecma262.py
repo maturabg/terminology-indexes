@@ -10,11 +10,10 @@ import json
 import re
 import tarfile
 import urllib.parse
-import urllib.request
 from collections.abc import Iterator
 from pathlib import Path
 
-from terminology_indexes.ingest.base import TIMEOUT, Adapter, RawSnapshot, download, make_request
+from terminology_indexes.ingest.base import Adapter, RawSnapshot, download, request_json
 from terminology_indexes.ingest.text import dedupe, squash
 from terminology_indexes.model import Entry, Label
 
@@ -43,8 +42,7 @@ class Ecma262(Adapter):
     def fetch(self, raw_dir: Path) -> RawSnapshot:
         package, version = self.source.fetch["url"], self.source.fetch.get("version", "latest")
         meta_url = REGISTRY + urllib.parse.quote(package, safe="@") + "/" + version
-        with urllib.request.urlopen(make_request(meta_url), timeout=TIMEOUT) as r:
-            meta = json.load(r)
+        meta, _ = request_json(meta_url)
         path = raw_dir / self.source.id / f"ecma262-biblio-{meta['version']}.tgz"
         download(meta["dist"]["tarball"], path)
         check_integrity(path, meta["dist"]["integrity"])

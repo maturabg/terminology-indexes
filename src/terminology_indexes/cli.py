@@ -124,6 +124,7 @@ def cmd_assemble(args: argparse.Namespace) -> int:
         previous=read_json(args.manifest),
         out=args.out,
         release_tag=args.release_tag,
+        at=datetime.now(UTC),
         force=args.force,
     )
     write_json(args.manifest, result["manifest"])

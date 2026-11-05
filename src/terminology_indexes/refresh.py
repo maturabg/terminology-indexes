@@ -5,6 +5,9 @@ matrix job each), and ``assemble`` once over all of their outputs. Every step
 reads and writes the same manifest format as ``build.manifest``, with two more
 fields per source: ``checked_at`` (last successful fetch, changed or not) and
 ``outcome`` of the last run.
+
+A failure is temporary (the site or the network is down) or needs a person.
+``refresh_source`` tells them apart, ``assemble`` decides whether to ``alert``.
 """
 
 import json
@@ -16,6 +19,7 @@ from pathlib import Path
 
 from terminology_indexes.build import BuildError, build_shard, combine, manifest, now
 from terminology_indexes.ingest import ADAPTERS, get_adapter
+from terminology_indexes.ingest.base import is_temporary
 from terminology_indexes.model import Source
 from terminology_indexes.providers import load_providers
 
@@ -32,6 +36,10 @@ PROBLEMS = frozenset({FAILED, REJECTED})
 # The cron does not fire at the same minute every day; a P1D source checked
 # yesterday a bit later than today's run must still be due.
 MAX_SLACK = timedelta(hours=12)
+
+# A temporary failure alerts only if it lasts this long after the source was due:
+# nightly retries take care of outages, and a site blocking our IPs also looks temporary.
+GRACE = timedelta(days=7)
 
 
 def shard_name(source_id: str) -> str:
@@ -58,11 +66,16 @@ def buildable(registry: dict[str, Source]) -> dict[str, Source]:
     return {sid: s for sid, s in registry.items() if s.mode == "index" and s.status == "active" and sid in ADAPTERS}
 
 
-def is_due(source: Source, previous: dict | None, at: datetime) -> bool:
+def last_checked(previous: dict | None) -> datetime | None:
     last = (previous or {}).get("checked_at") or (previous or {}).get("fetched_at")
-    if not last or source.refresh is None:
+    return datetime.fromisoformat(last) if last else None
+
+
+def is_due(source: Source, previous: dict | None, at: datetime) -> bool:
+    last = last_checked(previous)
+    if last is None or source.refresh is None:
         return True
-    return at - datetime.fromisoformat(last) >= source.refresh - min(MAX_SLACK, source.refresh / 2)
+    return at - last >= source.refresh - min(MAX_SLACK, source.refresh / 2)
 
 
 def plan(
@@ -101,7 +114,7 @@ def refresh_source(source: Source, raw_dir: Path, shards_dir: Path, previous: di
             status["outcome"] = BUILT
     except Exception as e:
         log.exception("%s failed", source.id)
-        status |= {"outcome": FAILED, "message": f"{type(e).__name__}: {e}"}
+        status |= {"outcome": FAILED, "message": f"{type(e).__name__}: {e}", "temporary": is_temporary(e)}
     write_json(shards_dir / status_name(source.id), status)
     return status
 
@@ -143,12 +156,14 @@ def assemble(
     previous: dict,
     out: Path,
     release_tag: str,
+    at: datetime,
     force: bool = False,
 ) -> dict:
     """Pick one shard per source, combine them into ``out`` if anything changed.
 
-    Returns ``{"changed": bool, "manifest": {...}, "sources": {id: {"outcome", "message", "shard"}}}``;
-    ``shard`` is the file that went into the index (the release publishes exactly these).
+    Returns ``{"changed": bool, "manifest": {...}, "sources": {id: {"outcome", "message", "alert", "shard"}}}``;
+    ``shard`` is the file that went into the index (the release publishes exactly these),
+    ``alert`` says the problem needs an issue.
     ``manifest`` is the new one if ``changed``, else the previous one with fresh ``checked_at``.
     """
     sources = buildable(registry)
@@ -174,9 +189,16 @@ def assemble(
             chosen[sid] = old
         elif sid not in chosen:
             message = (message + "; " if message else "") + "no previous shard: source is not in the index"
+        alert = outcome in PROBLEMS
+        if status.get("temporary") and (last := last_checked(seen.get(sid))):
+            failing_since = last + (source.refresh or timedelta(0))
+            if sid in chosen and at - failing_since < GRACE:
+                alert = False
+            else:
+                message += f"; failing since {failing_since.date()}"
         checked_at = status["checked_at"] if outcome in (BUILT, UNCHANGED) else seen.get(sid, {}).get("checked_at")
         shard = str(chosen[sid]) if sid in chosen else None
-        report[sid] = {"outcome": outcome, "message": message, "checked_at": checked_at, "shard": shard}
+        report[sid] = {"outcome": outcome, "message": message, "alert": alert, "checked_at": checked_at, "shard": shard}
 
     rebuilt = any(r["outcome"] == BUILT for r in report.values())
     changed = force or rebuilt or set(chosen) != set(seen)
@@ -229,8 +251,9 @@ def summary(result: dict) -> str:
     lines = [head, "", "| source | outcome | rows | snapshot | message |", "| --- | --- | --- | --- | --- |"]
     for sid, r in result["sources"].items():
         entry = m["sources"].get(sid, {})
+        outcome = f"{r['outcome']} (temporary)" if r["outcome"] == FAILED and not r["alert"] else r["outcome"]
         lines.append(
-            f"| {sid} | {r['outcome']} | {entry.get('row_count', '—')} | {entry.get('snapshot_version', '—')}"
+            f"| {sid} | {outcome} | {entry.get('row_count', '—')} | {entry.get('snapshot_version', '—')}"
             f" | {r['message'].replace('|', '\\|')} |"
         )
     return "\n".join(lines) + "\n"

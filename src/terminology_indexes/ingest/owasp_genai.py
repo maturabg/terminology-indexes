@@ -9,12 +9,11 @@ import html
 import json
 import re
 import time
-import urllib.request
 from collections.abc import Iterator
 from dataclasses import asdict
 from pathlib import Path
 
-from terminology_indexes.ingest.base import TIMEOUT, Adapter, RawSnapshot, make_request
+from terminology_indexes.ingest.base import Adapter, RawSnapshot, request_json
 from terminology_indexes.ingest.html_page import RobotsDenied, robots_allowed
 from terminology_indexes.ingest.text import dedupe, heading_labels, squash
 from terminology_indexes.model import Entry, Label
@@ -53,9 +52,9 @@ class OwaspGenai(Adapter):
             items, page, pages = [], 1, 1
             while page <= pages:
                 url = f"{api}{post_type}?per_page={PER_PAGE}&page={page}&_fields={FIELDS}"
-                with urllib.request.urlopen(make_request(url), timeout=TIMEOUT) as r:
-                    pages = int(r.headers.get("X-WP-TotalPages") or 1)
-                    items += json.load(r)
+                batch, headers = request_json(url)
+                pages = int(headers.get("X-WP-TotalPages") or 1)
+                items += batch
                 page += 1
                 time.sleep(delay)
             (root / f"{post_type}.json").write_text(json.dumps(items, ensure_ascii=False), encoding="utf-8")

@@ -1,4 +1,4 @@
-"""MITRE CWE from ``cwec_latest.xml.zip``: weaknesses, categories and views."""
+"""MITRE CWE from ``cwec_latest.xml.zip``: weaknesses, groupings and views."""
 
 import hashlib
 import re
@@ -11,12 +11,12 @@ from terminology_indexes.ingest.base import Adapter, RawSnapshot, download
 from terminology_indexes.ingest.text import dedupe, squash
 from terminology_indexes.model import Entry, Label
 
-NS = "{http://cwe.mitre.org/cwe-7}"
+NS = "{http://cwe.mitre.org/cwe-8}"
 URL = "https://cwe.mitre.org/data/definitions/{}.html"
 # element -> (kind, element with the short text)
 ELEMENTS = {
     "Weakness": ("concept", "Description"),
-    "Category": ("concept", "Summary"),
+    "Grouping": ("concept", "Summary"),  # "Category" before schema 8.0 (CWE 5.0)
     "View": ("document", "Objective"),
 }
 
@@ -59,6 +59,9 @@ class MitreCwe(Adapter):
     def parse(self, snapshot: RawSnapshot) -> Iterator[Entry]:
         root = ET.fromstring(read_catalog(snapshot.path))
         items = [(tag, el) for tag in ELEMENTS for el in root.iter(NS + tag)]
+        # A new schema must fail by name: a lost element type can stay under the row-drop guard.
+        if missing := set(ELEMENTS) - {tag for tag, _ in items}:
+            raise ValueError(f"{snapshot.path}: no {sorted(missing)} under {NS} (root is {root.tag})")
         status = {el.get("ID", ""): "deprecated" if el.get("Status") == "Deprecated" else "active" for _, el in items}
         views = {el.get("ID", "") for tag, el in items if tag == "View"}
         for tag, el in items:

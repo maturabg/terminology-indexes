@@ -1,3 +1,7 @@
+import zipfile
+from pathlib import Path
+
+import pytest
 from conftest import CWE_ZIP, load_source, parse_fixture
 
 from terminology_indexes.ingest import get_adapter
@@ -7,7 +11,7 @@ from terminology_indexes.model import Label
 
 def test_snapshot() -> None:
     snapshot = get_adapter(load_source("mitre_cwe")).snapshot(CWE_ZIP)
-    assert snapshot.snapshot_version == f"4.20+{snapshot.sha256[:12]}"
+    assert snapshot.snapshot_version == f"5.0+{snapshot.sha256[:12]}"
 
 
 def test_parse() -> None:
@@ -24,12 +28,13 @@ def test_parse() -> None:
     assert xss.snippet.startswith("The product does not neutralize")
     # the id and every Alternate_Term is a label; "a / b / c" is three
     assert xss.labels[:3] == [
-        Label("Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')", "en", "pref"),
+        Label("Improper Neutralization of Input During Web Page Generation", "en", "pref"),
         Label("CWE-79", "en", "alt"),
-        Label("XSS", "en", "alt"),
+        Label("Cross-site Scripting", "en", "alt"),
     ]
     assert {"Reflected XSS", "Non-Persistent XSS", "Type 1 XSS"} <= {l.label for l in xss.labels}
     assert entries["CWE-699"].kind == "document"
+    assert (entries["CWE-16"].kind, entries["CWE-16"].extra["type"]) == ("concept", "grouping")
     # Obsolete is still a page: active, with the CWE status in extra
     assert (entries["CWE-16"].status, entries["CWE-16"].extra["cwe_status"]) == ("active", "Obsolete")
 
@@ -44,6 +49,25 @@ def test_deprecated() -> None:
     )
     assert entries["CWE-217"].replaced_by is None  # CWE-766 and CWE-767: split, no single replacement
     assert entries["CWE-1"].replaced_by is None  # mentions only the Development View (CWE-699)
+
+
+@pytest.mark.parametrize(
+    ("before", "after", "missing"),
+    [
+        (b"http://cwe.mitre.org/cwe-8", b"http://cwe.mitre.org/cwe-9", "'Grouping', 'View', 'Weakness'"),
+        (b"Grouping", b"Cluster", "'Grouping'"),
+    ],
+)
+def test_unknown_schema_fails_by_name(tmp_path: Path, before: bytes, after: bytes, missing: str) -> None:
+    with zipfile.ZipFile(CWE_ZIP) as z:
+        name = z.namelist()[0]
+        xml = z.read(name)
+    path = tmp_path / "cwec.xml.zip"
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr(name, xml.replace(before, after))
+    adapter = get_adapter(load_source("mitre_cwe"))
+    with pytest.raises(ValueError, match=missing):
+        list(adapter.parse(adapter.snapshot(path)))
 
 
 def test_replacement() -> None:

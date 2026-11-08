@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-11-07T00:37:45+00:00",
-  "release_tag": "index-20261107",
-  "index_sha256": "d59bac8986fa98225cc609a7cf2296fb35e91c1599b23aebcb11efd3981e2565",
+  "built_at": "2026-11-07T23:58:57+00:00",
+  "release_tag": "index-20261107.2",
+  "index_sha256": "55664eb95faecca52dc63b6808af25dafa7f69709a8fe1cb38bc55d5e84be690",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -92,7 +92,7 @@
       "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
       "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-07T00:21:45+00:00",
+      "checked_at": "2026-11-07T23:58:34+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -141,13 +141,13 @@
       "outcome": "not_due"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10080+891d504b7405",
-      "fetched_at": "2026-11-06T01:08:33+00:00",
-      "raw_sha256": "891d504b74051f8091ec6ccfba30170357899f07ee1f81d7824ba1657416ffc1",
-      "row_count": 9854,
+      "snapshot_version": "RFC10082+e2c04ba89a5c",
+      "fetched_at": "2026-11-07T23:58:35+00:00",
+      "raw_sha256": "e2c04ba89a5c1bab9e40ad664eeaa0bc41522aed73441278265f2ed87467db98",
+      "row_count": 9858,
       "license": "open",
-      "checked_at": "2026-11-07T00:21:47+00:00",
-      "outcome": "unchanged"
+      "checked_at": "2026-11-07T23:58:33+00:00",
+      "outcome": "built"
     },
     "unicode_glossary": {
       "snapshot_version": "42a7c5ee230a",
@@ -164,7 +164,7 @@
       "raw_sha256": "5d142e43d846b79ba456b13689b6139b454dcc097c42c66148e53f7154bce223",
       "row_count": 8282,
       "license": "cc_by",
-      "checked_at": "2026-11-07T00:21:45+00:00",
+      "checked_at": "2026-11-07T23:58:33+00:00",
       "outcome": "unchanged"
     },
     "wiktionary": {
@@ -174,7 +174,7 @@
       "row_count": 907906,
       "license": "cc_by_sa",
       "checked_at": "2026-11-07T00:21:46+00:00",
-      "outcome": "built"
+      "outcome": "not_due"
     }
   }
 }

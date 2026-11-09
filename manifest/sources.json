@@ -92,7 +92,7 @@
       "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
       "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-07T23:58:34+00:00",
+      "checked_at": "2026-11-09T00:02:21+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -146,8 +146,8 @@
       "raw_sha256": "e2c04ba89a5c1bab9e40ad664eeaa0bc41522aed73441278265f2ed87467db98",
       "row_count": 9858,
       "license": "open",
-      "checked_at": "2026-11-07T23:58:33+00:00",
-      "outcome": "built"
+      "checked_at": "2026-11-09T00:02:22+00:00",
+      "outcome": "unchanged"
     },
     "unicode_glossary": {
       "snapshot_version": "42a7c5ee230a",
@@ -164,7 +164,7 @@
       "raw_sha256": "5d142e43d846b79ba456b13689b6139b454dcc097c42c66148e53f7154bce223",
       "row_count": 8282,
       "license": "cc_by",
-      "checked_at": "2026-11-07T23:58:33+00:00",
+      "checked_at": "2026-11-09T00:02:23+00:00",
       "outcome": "unchanged"
     },
     "wiktionary": {

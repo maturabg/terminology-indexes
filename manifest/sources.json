@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-11-17T03:11:32+00:00",
-  "release_tag": "index-20261117",
-  "index_sha256": "427c6dc7910595dee217d4df9629e2c1ddfd6d2230fe8671507e74c7df8c3e02",
+  "built_at": "2026-11-18T02:37:09+00:00",
+  "release_tag": "index-20261118",
+  "index_sha256": "7ec0ba6ba48e971508bd39f27e97db8b8f98df2995a188afe04edf6926a6a002",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -92,7 +92,7 @@
       "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
       "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-17T03:11:08+00:00",
+      "checked_at": "2026-11-18T02:36:49+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -141,12 +141,12 @@
       "outcome": "not_due"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10091+87c2f76c7464",
-      "fetched_at": "2026-11-17T03:11:10+00:00",
-      "raw_sha256": "87c2f76c746429520719196e533c0442a2a5079d9e565b7c722eecb92b9359c9",
-      "row_count": 9861,
+      "snapshot_version": "RFC10094+871ed4308225",
+      "fetched_at": "2026-11-18T02:36:50+00:00",
+      "raw_sha256": "871ed43082254647ebe2eafc21cc03427ae3315b92e02b20a466aa9c13b152c7",
+      "row_count": 9863,
       "license": "open",
-      "checked_at": "2026-11-17T03:11:09+00:00",
+      "checked_at": "2026-11-18T02:36:49+00:00",
       "outcome": "built"
     },
     "unicode_glossary": {
@@ -164,8 +164,8 @@
       "raw_sha256": "6b459a38e5e0f79f157605cd5bbcbec1629f23e8054ff4da9d87583f5e671188",
       "row_count": 8330,
       "license": "cc_by",
-      "checked_at": "2026-11-17T03:11:13+00:00",
-      "outcome": "built"
+      "checked_at": "2026-11-18T02:36:50+00:00",
+      "outcome": "unchanged"
     },
     "wiktionary": {
       "snapshot_version": "c1b86dbbd427",

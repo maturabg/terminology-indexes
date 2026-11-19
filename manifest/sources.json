@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-11-18T02:37:09+00:00",
-  "release_tag": "index-20261118",
-  "index_sha256": "7ec0ba6ba48e971508bd39f27e97db8b8f98df2995a188afe04edf6926a6a002",
+  "built_at": "2026-11-19T02:00:41+00:00",
+  "release_tag": "index-20261119",
+  "index_sha256": "37d35c82c7d830c45d695627244ea33244ee4ea96b28d21ae3a986c446d0f219",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -92,7 +92,7 @@
       "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
       "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-18T02:36:49+00:00",
+      "checked_at": "2026-11-19T02:00:08+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -141,12 +141,12 @@
       "outcome": "not_due"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10094+871ed4308225",
-      "fetched_at": "2026-11-18T02:36:50+00:00",
-      "raw_sha256": "871ed43082254647ebe2eafc21cc03427ae3315b92e02b20a466aa9c13b152c7",
-      "row_count": 9863,
+      "snapshot_version": "RFC10097+a5482a1de15f",
+      "fetched_at": "2026-11-19T02:00:08+00:00",
+      "raw_sha256": "a5482a1de15fedad12a02cad224a9b9ada861e2ab42bc0262f317157293d7589",
+      "row_count": 9866,
       "license": "open",
-      "checked_at": "2026-11-18T02:36:49+00:00",
+      "checked_at": "2026-11-19T02:00:07+00:00",
       "outcome": "built"
     },
     "unicode_glossary": {
@@ -159,13 +159,13 @@
       "outcome": "not_due"
     },
     "webref": {
-      "snapshot_version": "2026-11-17+63d5538161c6",
-      "fetched_at": "2026-11-17T03:11:16+00:00",
-      "raw_sha256": "6b459a38e5e0f79f157605cd5bbcbec1629f23e8054ff4da9d87583f5e671188",
-      "row_count": 8330,
+      "snapshot_version": "2026-11-19+7d0d555b4101",
+      "fetched_at": "2026-11-19T02:00:12+00:00",
+      "raw_sha256": "35185760e99a8d3f7b1fa3bee8000ccef5732de6bf32e82d23fa50985a5485e3",
+      "row_count": 8331,
       "license": "cc_by",
-      "checked_at": "2026-11-18T02:36:50+00:00",
-      "outcome": "unchanged"
+      "checked_at": "2026-11-19T02:00:07+00:00",
+      "outcome": "built"
     },
     "wiktionary": {
       "snapshot_version": "c1b86dbbd427",

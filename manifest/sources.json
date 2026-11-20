@@ -1,9 +1,9 @@
 {
   "schema_version": "1",
   "norm_version": "1",
-  "built_at": "2026-11-19T02:00:41+00:00",
-  "release_tag": "index-20261119",
-  "index_sha256": "37d35c82c7d830c45d695627244ea33244ee4ea96b28d21ae3a986c446d0f219",
+  "built_at": "2026-11-20T01:54:43+00:00",
+  "release_tag": "index-20261120",
+  "index_sha256": "16011e88a52630e37c7dc632f6dafce0c450fab1e78fe96e8b743f2766bd14ec",
   "sources": {
     "cncf_glossary": {
       "snapshot_version": "2026-10-19+c6493fa4824c",
@@ -11,17 +11,17 @@
       "raw_sha256": "dd76320b1a5770397d9e0e32a7e46f300ef3a3884d4a44d0317913658d44e3a7",
       "row_count": 80,
       "license": "cc_by",
-      "checked_at": "2026-11-13T01:29:10+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:13+00:00",
+      "outcome": "unchanged"
     },
     "ecma262": {
-      "snapshot_version": "2.2.3254+b03a358ae5e0",
-      "fetched_at": "2026-11-13T01:29:10+00:00",
-      "raw_sha256": "b03a358ae5e0d0c054faca62ae3295bb9bfa4c0ed9e5c430f85ed5d2605f45f3",
-      "row_count": 2722,
+      "snapshot_version": "2.2.3260+47f4f7a1f160",
+      "fetched_at": "2026-11-20T01:54:15+00:00",
+      "raw_sha256": "47f4f7a1f160cc32f1b15639ba4d4b9ad18d5f141db84e6ff617addfa3fc9c48",
+      "row_count": 2725,
       "license": "open",
-      "checked_at": "2026-11-13T01:29:09+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:15+00:00",
+      "outcome": "built"
     },
     "etymonline": {
       "snapshot_version": "a408ca302379",
@@ -74,8 +74,8 @@
       "raw_sha256": "3ad76d711945093176f79127c356537f01e19e88689edeef5a20821f076e28ca",
       "row_count": 632,
       "license": "cc_by_sa",
-      "checked_at": "2026-11-13T01:29:15+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:14+00:00",
+      "outcome": "unchanged"
     },
     "mitre_cwe": {
       "snapshot_version": "5.0+47165a9593de",
@@ -83,8 +83,8 @@
       "raw_sha256": "47165a9593def89c69b9ef50c34d99ac68db55df8373613e85e9cc9ceecefb1d",
       "row_count": 1477,
       "license": "open",
-      "checked_at": "2026-11-13T01:29:10+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:14+00:00",
+      "outcome": "unchanged"
     },
     "nist_csrc": {
       "snapshot_version": "2026-11-03+bc2a9dc2eb32",
@@ -92,7 +92,7 @@
       "raw_sha256": "bc2a9dc2eb325d195cf3160d2eeddce81d2847256a7ef85f0afd74e5f882bf4a",
       "row_count": 9149,
       "license": "public_domain",
-      "checked_at": "2026-11-19T02:00:08+00:00",
+      "checked_at": "2026-11-20T01:54:14+00:00",
       "outcome": "unchanged"
     },
     "nist_dads": {
@@ -105,13 +105,13 @@
       "outcome": "not_due"
     },
     "owasp_cheatsheets": {
-      "snapshot_version": "2026-11-12+ef7070e672ad",
-      "fetched_at": "2026-11-13T01:29:10+00:00",
-      "raw_sha256": "4d780eeb4145a70b0827d26070ed5dd3a86c0a30308d854dc5c9597b6b411b1f",
-      "row_count": 775,
+      "snapshot_version": "2026-11-19+c2a1e3e32cec",
+      "fetched_at": "2026-11-20T01:54:16+00:00",
+      "raw_sha256": "e75e36d4ed335680a74fc5d20584c454cae2bc267c2fb503ae64d57a9f7c839b",
+      "row_count": 788,
       "license": "cc_by_sa",
-      "checked_at": "2026-11-13T01:29:09+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:15+00:00",
+      "outcome": "built"
     },
     "owasp_genai": {
       "snapshot_version": "2026-10-12+4d4eca624678",
@@ -119,8 +119,8 @@
       "raw_sha256": "4d4eca624678fd0313ef8adcc40daaa863297a58adbc3ffb241b5d45da137e6c",
       "row_count": 61,
       "license": "cc_by_sa",
-      "checked_at": "2026-11-13T01:29:12+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:12+00:00",
+      "outcome": "unchanged"
     },
     "postgresql_glossary": {
       "snapshot_version": "dbcc3c557784",
@@ -132,21 +132,21 @@
       "outcome": "not_due"
     },
     "python_glossary": {
-      "snapshot_version": "3.14+470f44b926ad",
-      "fetched_at": "2026-11-13T01:29:11+00:00",
-      "raw_sha256": "470f44b926adc634f7079b0a57552962d4a9c87db4c8617570945247c2068cf6",
+      "snapshot_version": "3.14+c1f078cf4c41",
+      "fetched_at": "2026-11-20T01:54:14+00:00",
+      "raw_sha256": "c1f078cf4c41a24593f8ea69523d4b4257d4d9846b54631fca32b8c82edeeed5",
       "row_count": 178,
       "license": "open",
-      "checked_at": "2026-11-13T01:29:11+00:00",
-      "outcome": "not_due"
+      "checked_at": "2026-11-20T01:54:14+00:00",
+      "outcome": "built"
     },
     "rfc_editor": {
-      "snapshot_version": "RFC10097+a5482a1de15f",
-      "fetched_at": "2026-11-19T02:00:08+00:00",
-      "raw_sha256": "a5482a1de15fedad12a02cad224a9b9ada861e2ab42bc0262f317157293d7589",
-      "row_count": 9866,
+      "snapshot_version": "RFC10097+6439defbd58a",
+      "fetched_at": "2026-11-20T01:54:14+00:00",
+      "raw_sha256": "6439defbd58a8b651731159274301ab96db1aa3adac4957dcb9bb5babab8988b",
+      "row_count": 9868,
       "license": "open",
-      "checked_at": "2026-11-19T02:00:07+00:00",
+      "checked_at": "2026-11-20T01:54:13+00:00",
       "outcome": "built"
     },
     "unicode_glossary": {
@@ -159,12 +159,12 @@
       "outcome": "not_due"
     },
     "webref": {
-      "snapshot_version": "2026-11-19+7d0d555b4101",
-      "fetched_at": "2026-11-19T02:00:12+00:00",
-      "raw_sha256": "35185760e99a8d3f7b1fa3bee8000ccef5732de6bf32e82d23fa50985a5485e3",
+      "snapshot_version": "2026-11-19+5974de543af4",
+      "fetched_at": "2026-11-20T01:54:18+00:00",
+      "raw_sha256": "dd01344c00c8bc7bdd7b9700cddb04d1d97db35fd26868760635538211e621c6",
       "row_count": 8331,
       "license": "cc_by",
-      "checked_at": "2026-11-19T02:00:07+00:00",
+      "checked_at": "2026-11-20T01:54:13+00:00",
       "outcome": "built"
     },
     "wiktionary": {
